@@ -6,12 +6,14 @@
 </div>
 
 <div class="courses">
+    <!-- "courseSelected" is a Not a standar browser event-->
+     <!-- "courseSelected" - name of the event; "onCourseSelected" - parent's function  -->
+      <!-- "I'm gonna listen to the personalized 'courseSelected' event, when triggered, I call "onCourseSelected" and then pass $event" -->
+    <course-card (courseSelected)="onCourseSelected($event)" [course]="coreCourse"></course-card> <!--Here we add the input property [title] and assign the variable value-->
 
-    <course-card [course]="coreCourse"></course-card> <!--Here we add the input property [title] and assign the variable value-->
-
-    <course-card [course]="rxJsCourse"></course-card>
+    <course-card (courseSelected)="onCourseSelected($event)" [course]="rxJsCourse"></course-card>
     
-    <course-card [course]="ngrxCourse"></course-card>
+    <course-card (courseSelected)="onCourseSelected($event)" [course]="ngrxCourse"></course-card>
 
 </div>
 
