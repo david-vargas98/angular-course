@@ -6,15 +6,26 @@
 </div>
 
 <div class="courses">
-    <!-- "courseSelected" is a Not a standar browser event-->
-     <!-- "courseSelected" - name of the event; "onCourseSelected" - parent's function  -->
-      <!-- "I'm gonna listen to the personalized 'courseSelected' event, when triggered, I call "onCourseSelected" and then pass $event" -->
-    <course-card (courseSelected)="onCourseSelected($event)" [course]="coreCourse"></course-card> <!--Here we add the input property [title] and assign the variable value-->
+    @for(course of courses; track course.id; let index = $index; let count = $count; let first = $first; let last = $last; let even = $even; let odd = $odd) {
 
-    <course-card (courseSelected)="onCourseSelected($event)" [course]="rxJsCourse"></course-card>
-    
-    <course-card (courseSelected)="onCourseSelected($event)" [course]="ngrxCourse"></course-card>
+        <h1>Count: {{ count }}</h1>
 
+        <!-- "courseSelected" is a Not a standar browser event-->
+         <!-- "courseSelected" - name of the event; "onCourseSelected" - parent's function  -->
+          <!-- "I'm gonna listen to the personalized 'courseSelected' event, when triggered, I call "onCourseSelected" and then pass $event" -->
+        <course-card 
+            [course]="course" 
+            [index]="index" 
+            [class.is-first]="first" 
+            [class.is-last]="last" 
+            [class.is-even]="even"
+            [class.is-odd]="odd"
+
+            (courseSelected)="onCourseSelected($event)"/> <!--we can avoid adding '</course-card>', angular has self-closing-->
+    }
+    @empty{
+        <h1>No courses have been found.</h1>
+    }
 </div>
 
 

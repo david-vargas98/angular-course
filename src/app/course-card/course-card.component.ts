@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, input } from '@angular/core';
 import { Course } from '../model/course';
 
 @Component({
@@ -17,6 +17,9 @@ export class CourseCardComponent {
     required: true //this feature allows us to make an input required, this one. by default is set to false 
   })
   course:Course
+
+  @Input({required: true})
+  index: number
   
   //this creates the event here, in the child component and it says that will emit an event
   @Output('courseSelected') // we can assign another name for the output if we want to: @Output('another), in html:(another)="onCourseSelected($event)" or just leave it empty and it will take the variable name
