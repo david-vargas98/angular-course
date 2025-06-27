@@ -6,26 +6,17 @@
 </div>
 
 <div class="courses">
-    @for(course of courses; track trackCourse(index, course); let index = $index; let count = $count; let first = $first; let last = $last; let even = $even; let odd = $odd) {
-
-        <h1>Count: {{ count }}</h1>
-
-        <!-- "courseSelected" is a Not a standar browser event-->
-         <!-- "courseSelected" - name of the event; "onCourseSelected" - parent's function  -->
-          <!-- "I'm gonna listen to the personalized 'courseSelected' event, when triggered, I call "onCourseSelected" and then pass $event" -->
-        <course-card 
-            [course]="course" 
-            [index]="index" 
-            [class.is-first]="first" 
-            [class.is-last]="last" 
-            [class.is-even]="even"
-            [class.is-odd]="odd"
-
-            (courseSelected)="onCourseSelected($event)"/> <!--we can avoid adding '</course-card>', angular has self-closing-->
-    }
-    @empty{
-        <h1>No courses have been found.</h1>
-    }
+    <!-- "courseSelected" is a Not a standar browser event-->
+     <!-- "courseSelected" - name of the event; "onCourseSelected" - parent's function  -->
+      <!-- "I'm gonna listen to the personalized 'courseSelected' event, when triggered, I call "onCourseSelected" and then pass $event" -->
+    <course-card *ngFor="let course of courses; index as i; first as isFirst; last as isLast; even as isEven; odd as isOdd"
+        (courseSelected)="onCourseSelected($event)" 
+        [course]="course"
+        [cardIndex]="i + 1"
+        [class.is-first]="isFirst"
+        [class.is-last]="isLast"
+        [class.is-even]="isEven"
+        [class.is-odd]="isOdd"/>
 </div>
 
 

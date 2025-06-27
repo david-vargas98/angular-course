@@ -20,6 +20,9 @@ export class CourseCardComponent {
 
   @Input({required: true})
   index: number
+
+  @Input({required: true})
+  cardIndex : number
   
   //this creates the event here, in the child component and it says that will emit an event
   @Output('courseSelected') // we can assign another name for the output if we want to: @Output('another), in html:(another)="onCourseSelected($event)" or just leave it empty and it will take the variable name
