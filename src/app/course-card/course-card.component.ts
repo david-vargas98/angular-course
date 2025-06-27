@@ -34,5 +34,9 @@ export class CourseCardComponent {
 
     this.courseEmitter.emit(this.course) //this is gonna emmit the event 'courseSelected' and sends 'this.course' as data
   }
+
+  isImageVisible(){
+    return this.course && this.course.iconUrl;
+  }
     
 }
