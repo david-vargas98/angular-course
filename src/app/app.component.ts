@@ -15,6 +15,9 @@ export class AppComponent {
     onCourseSelected(course:Course){
         console.log("HELLLOOO on app", course)
     }
-
+    // tracking function  
+    trackCourse(index: number, course:Course){
+        return course.id // returns a unique identifier gor each object
+    }
 
 }
