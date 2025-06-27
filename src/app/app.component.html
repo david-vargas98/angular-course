@@ -1,22 +1,20 @@
 <div class="top-menu">
+  <img class="logo"
+    src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
 
-    <img class="logo"
-         src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
+  </div>
 
-</div>
-
-<div class="courses">
-    <!-- "courseSelected" is a Not a standar browser event-->
-     <!-- "courseSelected" - name of the event; "onCourseSelected" - parent's function  -->
-      <!-- "I'm gonna listen to the personalized 'courseSelected' event, when triggered, I call "onCourseSelected" and then pass $event" -->
-    <course-card *ngFor="let course of courses; index as i; first as isFirst; last as isLast; even as isEven; odd as isOdd"
-        (courseSelected)="onCourseSelected($event)" 
+  <div class="courses">
+    @for (course of courses; track course; let i = $index; let isFirst = $first; let isLast = $last; let isEven = $even; let isOdd = $odd) {
+      <course-card
+        (courseSelected)="onCourseSelected($event)"
         [course]="course"
         [cardIndex]="i + 1"
         [class.is-first]="isFirst"
         [class.is-last]="isLast"
         [class.is-even]="isEven"
         [class.is-odd]="isOdd"/>
-</div>
+    }
+  </div>
 
 
