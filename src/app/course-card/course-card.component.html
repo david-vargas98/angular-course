@@ -1,14 +1,15 @@
 @if (course) {
-  <div class="course-card">
+  <div class="course-card" [ngClass]="cardClasses()" [ngStyle]="cardStyles()">
+    <!-- <div class="course-title" [style.text-decoration]="'underline'"> We can use the [style.prop] to dinamically assign styles -->
     <div class="course-title">
       {{cardIndex}} {{ course.description }}
     </div>
-    @if (isImageVisible()) {
+    <!-- @if (isImageVisible()) {
       <img width="300" alt="Angular Logo"
         [src]="course.iconUrl">
     } @else {
       <b><p>No image is available.</p></b>
-    }
+    } -->
     <div class="course-description">
       {{ course.longDescription }}
     </div>

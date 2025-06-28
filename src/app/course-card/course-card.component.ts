@@ -38,5 +38,19 @@ export class CourseCardComponent {
   isImageVisible(){
     return this.course && this.course.iconUrl;
   }
-    
+  // this function is used for the ngClass directive
+  cardClasses(){
+    if(this.course.category == 'BEGINNER')
+      return 'beginner'
+    else if(this.course.category == 'INTERMEDIATE')
+      return 'intermediate'
+    else{
+      return 'advanced'
+    }
+  }
+
+  // this function is used for ngStyle directive
+  cardStyles(){
+    return {'background-image': 'url(' + this.course.iconUrl + ')'};
+  }
 }
