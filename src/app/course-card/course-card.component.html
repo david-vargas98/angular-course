@@ -1,4 +1,5 @@
-@if (course) {
+<ng-container> <!-- Instead of creating an extra 'div' use this tag, since it won't create an extra DOM node -->
+    @if (course) {
   <div class="course-card" [ngClass]="cardClasses()"> <!--[ngStyle]="cardStyles()"--> 
     <div class="course-title">
       {{cardIndex}} {{ course.description }}
@@ -13,16 +14,28 @@
       {{ course.longDescription }}
     </div>
 
-    <div class="course-category" [ngSwitch]="course.category">
-        <div class="category" *ngSwitchCase="'BEGINNER'">Beginner</div>
+    <ng-container [ngSwitch]="course.category">
+        <div class="course-category">
+            <ng-container *ngSwitchCase="'BEGINNER'">
+                <div class="category">Beginner</div>
+            </ng-container>
 
-        <div class="category" *ngSwitchCase="'INTERMEDIATE'">Intermediate</div>
+            <ng-container *ngSwitchCase="'INTERMEDIATE'">
+                <div class="category">Intermediate</div>
+            </ng-container>
 
-        <div class="category" *ngSwitchCase="'ADVANCED'">Advanced</div>
+            <ng-container *ngSwitchCase="'ADVANCED'">
+                <div class="category">Advanced</div>
+            </ng-container>
+    
+            <ng-container *ngSwitchDefault>
+                <div class="category">All levels</div>
+            </ng-container>
+        </div>
+    </ng-container>
 
-        <div class="category" *ngSwitchDefault>All levels</div>
-    </div>
 
     <button (click)="onCourseViewed()" >View course</button>
   </div>
 }
+</ng-container>
