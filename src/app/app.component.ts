@@ -24,11 +24,15 @@ export class AppComponent {
     course = COURSES[0];
 
     // viewchild lesson
-    @ViewChild(CourseCardComponent)
-    card: CourseCardComponent;
+    @ViewChild('cardRef1') // instead of the componente name "CourseCardComponent", we can pass a template reference such as 'cardRef1'
+    card1: CourseCardComponent;
+
+    @ViewChild('cardRef2')
+    card2: CourseCardComponent;
 
     onCourseSelected(course:Course){
-        console.log(this.card)
+        console.log(this.card1)
+        console.log(this.card2)
     }
     // tracking function  
     trackCourse(index: number, course:Course){
