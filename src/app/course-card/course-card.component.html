@@ -2,7 +2,7 @@
     @if (course) {
   <div class="course-card" [ngClass]="cardClasses()"> <!--[ngStyle]="cardStyles()"--> 
     <div class="course-title">
-      {{cardIndex}} {{ course.description }}
+      {{ cardIndex || 'cardIndex not found -' }} {{ course.description }}
     </div>
     @if (isImageVisible()) {
       <img width="300" alt="Angular Logo"

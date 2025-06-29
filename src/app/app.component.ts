@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {COURSES} from '../db-data';
 import { Course } from './model/course';
+import { CourseCardComponent } from './course-card/course-card.component';
 
 @Component({
     selector: 'app-root',
@@ -22,8 +23,12 @@ export class AppComponent {
 
     course = COURSES[0];
 
+    // viewchild lesson
+    @ViewChild(CourseCardComponent)
+    card: CourseCardComponent;
+
     onCourseSelected(course:Course){
-        console.log("HELLLOOO on app", course)
+        console.log(this.card)
     }
     // tracking function  
     trackCourse(index: number, course:Course){

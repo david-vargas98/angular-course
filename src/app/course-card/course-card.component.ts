@@ -18,10 +18,10 @@ export class CourseCardComponent {
   })
   course:Course
 
-  @Input({required: true})
+  @Input()
   index: number
 
-  @Input({required: true})
+  @Input()
   cardIndex : number
   
   //this creates the event here, in the child component and it says that will emit an event
