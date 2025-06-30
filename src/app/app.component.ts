@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import {COURSES} from '../db-data';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
@@ -13,16 +13,11 @@ export class AppComponent implements AfterViewInit {
 
     courses = COURSES; //it contains the list of all courses
 
-    // viewchild lesson
-    @ViewChild('cardRef1', { read: ElementRef }) // instead of the componente name "CourseCardComponent", we can pass a template reference such as 'cardRef1'
-    card1: CourseCardComponent;
+    // @ViewChildren(CourseCardComponent)
+    // cards: QueryList<CourseCardComponent>; // we use QueryList for a list of elements and '<>' for its type
 
-    @ViewChild('cardRef2')
-    card2: CourseCardComponent;
-
-    // querying plain html elements
-    @ViewChild('courseImage') //it's not possible since the 'courseImage' is inside the child component "ng-container"
-    courseImage: ElementRef;
+    @ViewChildren(CourseCardComponent, {read: ElementRef}) // we can also pass an auxiliary conf element to get the DOM ElementRef for each matching result
+    cards: QueryList<ElementRef>; // the type also changes
 
     // constructor
     constructor(){
@@ -31,9 +26,26 @@ export class AppComponent implements AfterViewInit {
 
     // the earliest possible moment where all the references pupulated by ViewChild are available, and it is called by the framework itself 
     ngAfterViewInit(): void {
-        console.log("courseImage:", this.courseImage) // here is renderized, so it's available to access
 
-        this.courses[0].description = 'test';
+        console.log(this.cards)
+
+        // this.cards.changes.subscribe(
+        //     cards => console.log(cards)
+        // ); // emits multiple values over time as the collection gets modified, i.e. its state gets changed
+
+    }
+
+    onCoursesEdited(){
+        this.courses.push(
+            {
+                id: 1,
+                description: "Angular core deep dive",
+                iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png',
+                longDescription: "A detailed walk-through of the most important part of Angular - the Core and Common modules",
+                category: 'INTERMEDIATE',
+                lessonsCount: 10
+            }
+        );
     }
 
     onCourseSelected(course:Course){

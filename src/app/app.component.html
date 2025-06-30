@@ -4,9 +4,10 @@
 
   </div>
 
-  <div class="courses" #container>
-      <course-card #cardRef1
-        (courseSelected)="onCourseSelected($event)"
-        [course]="courses[0]"/>
+  <button (click)="onCoursesEdited()" >Edit courses</button>
 
+  <div class="courses" #container>
+      <course-card *ngFor="let course of courses" 
+        (courseSelected)="onCourseSelected($event)"
+        [course]="course"/>
   </div>
