@@ -2,7 +2,8 @@ import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } fro
 
 @Directive({
   selector: '[highlighted]',
-  standalone: false
+  standalone: false,
+  exportAs: 'hl' //this allows us to grap a reference from this class 
 })
 export class HighlightedDirective {
 
@@ -34,6 +35,12 @@ export class HighlightedDirective {
   @HostListener('mouseleave')
   mouseLeave(){
     this.isHighLighted = false;
+    this.toggleHighLight.emit(this.isHighLighted);
+  }
+
+  // method we will use to export
+  toggle(){
+    this.isHighLighted = !this.isHighLighted;
     this.toggleHighLight.emit(this.isHighLighted);
   }
 
