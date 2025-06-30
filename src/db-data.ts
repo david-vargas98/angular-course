@@ -2,13 +2,15 @@
 
 export const COURSES: any = [
 
+    //undefined, // ngIf exercise: for some reason there exists an object undefined; this will "broke" everything since can't read properties
+
     {
         id: 1,
-        description: "Angular Core Deep Dive",
-        iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png',
+        description: "Angular core deep dive",
+        //iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png',
         longDescription: "A detailed walk-through of the most important part of Angular - the Core and Common modules",
-        lessonsCount: 10,
-        category: 'INTERMEDIATE'
+        category: 'INTERMEDIATE',
+        lessonsCount: 10
     },
     {
         id: 2,

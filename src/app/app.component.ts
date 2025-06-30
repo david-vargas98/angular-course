@@ -1,58 +1,49 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Inject, Injector, OnInit} from '@angular/core';
-import {Course} from './model/course';
-import {Observable} from 'rxjs';
-import {AppConfig, CONFIG_TOKEN} from './config';
+import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import {COURSES} from '../db-data';
-import {CoursesService} from './courses/courses.service';
-import {createCustomElement} from '@angular/elements';
-import {CourseTitleComponent} from './course-title/course-title.component';
-import {CourseCardComponent} from './courses/course-card/course-card.component';
-import {CourseImageComponent} from './courses/course-image/course-image.component';
-import {NgForOf} from '@angular/common';
+import { Course } from './model/course';
+
 
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    imports: [
-        CourseCardComponent,
-        CourseImageComponent,
-        NgForOf
-    ]
+    standalone: false
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
 
-    courses: Course[] = COURSES;
+    courses = COURSES; //it contains the list of all courses
 
-    coursesTotal = this.courses.length;
 
-    constructor(
-        private coursesService: CoursesService,
-        @Inject(CONFIG_TOKEN) private config: AppConfig,
-        private injector: Injector) {
+    // constructor
+    constructor(){
 
     }
 
-    ngOnInit() {
-
-        //const htmlElement = createCustomElement(CourseTitleComponent, {injector:this.injector});
-
-        //customElements.define('course-title', htmlElement);
-
+    // the earliest possible moment where all the references pupulated by ViewChild are available, and it is called by the framework itself 
+    ngAfterViewInit(): void {
+        
     }
 
-    onEditCourse() {
-
-            this.courses[1].category = 'ADVANCED';
-
+    onCoursesEdited(){
+        this.courses.push(
+            {
+                id: 1,
+                description: "Angular core deep dive",
+                iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png',
+                longDescription: "A detailed walk-through of the most important part of Angular - the Core and Common modules",
+                category: 'INTERMEDIATE',
+                lessonsCount: 10
+            }
+        );
     }
 
-    save(course: Course) {
-        this.coursesService.saveCourse(course)
-            .subscribe(
-                () => console.log('Course Saved!')
-            );
+    onCourseSelected(course:Course){
+        
+    }
+    // tracking function  
+    trackCourse(index: number, course:Course){
+        return course.id // returns a unique identifier gor each object
     }
 
 
