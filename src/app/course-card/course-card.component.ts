@@ -1,5 +1,6 @@
-import { Component, Input, EventEmitter, Output, input } from '@angular/core';
+import { Component, Input, EventEmitter, Output, input, ViewChild, AfterViewInit, ContentChild, ElementRef } from '@angular/core';
 import { Course } from '../model/course';
+import { CourseImageComponent } from '../course-image/course-image.component';
 
 @Component({
   selector: 'course-card',
@@ -7,7 +8,7 @@ import { Course } from '../model/course';
   styleUrls: ['./course-card.component.css'],
   standalone: false  //we have to explicitly specify that is a standalone component, otherwise, a compilation error will persist
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements AfterViewInit {
   // //we need to import the Input on top
   // @Input() //we annote the variable with the input decorator, we're sayin' "hey, here goes a property from outside!"
   // title:string //we use this member variable
@@ -28,6 +29,17 @@ export class CourseCardComponent {
   @Output('courseSelected') // we can assign another name for the output if we want to: @Output('another), in html:(another)="onCourseSelected($event)" or just leave it empty and it will take the variable name
   //custom event emitter: we pass an optional type parameter which define what type of values are getting emitted 
   courseEmitter = new EventEmitter<Course>() // Event creation, event which will be emitted from the child (that's why of @output)
+
+  // we can't use ViewChild since it can only view the content of the own component, that's why we use 'ContentChild', works for ng-content
+  // @ContentChild(CourseImageComponent) // we can pass a template reference 'container' or the type 'CourseImageComponent'
+  // courseImg: CourseCardComponent;
+
+  @ContentChild(CourseImageComponent, {read: ElementRef}) // we can get the native DOM element instead of the component instance
+  courseImg: ElementRef;
+
+  ngAfterViewInit(): void {
+    console.log(this.courseImg)
+  }
 
   onCourseViewed(){
     console.log("HELLLOOO on course-card")

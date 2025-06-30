@@ -1,18 +1,13 @@
 <div class="top-menu">
-  <img class="logo"
-    src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
-
-  </div>
+  <img class="logo" src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
+</div>
 
   <div class="courses" *ngIf="courses[0] as course">
       <course-card 
         (courseSelected)="onCourseSelected($event)"
         [course]="course"> 
 
-        <div class="course-img">
-          <img width="300" alt="Angular Logo" [src]="course.iconUrl"> <!-- We have one element to display-->
-          <h3>Another HTML element inside the container</h3> <!-- We now have two elements to display thanks to 'class' in the select -->
-        </div>
+        <course-image [src]="course.iconUrl"></course-image>
 
         <div class="course-description">
           {{ course.longDescription }}
@@ -22,11 +17,4 @@
 
       </course-card>
 
-      <course-card 
-        (courseSelected)="onCourseSelected($event)"
-        [course]="courses[1]"> 
-
-          <img width="300" alt="Angular Logo" [src]="courses[1].iconUrl">
-
-      </course-card>
   </div>
