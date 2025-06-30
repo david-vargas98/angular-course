@@ -13,11 +13,6 @@ export class AppComponent implements AfterViewInit {
 
     courses = COURSES; //it contains the list of all courses
 
-    // @ViewChildren(CourseCardComponent)
-    // cards: QueryList<CourseCardComponent>; // we use QueryList for a list of elements and '<>' for its type
-
-    @ViewChildren(CourseCardComponent, {read: ElementRef}) // we can also pass an auxiliary conf element to get the DOM ElementRef for each matching result
-    cards: QueryList<ElementRef>; // the type also changes
 
     // constructor
     constructor(){
@@ -26,13 +21,7 @@ export class AppComponent implements AfterViewInit {
 
     // the earliest possible moment where all the references pupulated by ViewChild are available, and it is called by the framework itself 
     ngAfterViewInit(): void {
-
-        console.log(this.cards)
-
-        // this.cards.changes.subscribe(
-        //     cards => console.log(cards)
-        // ); // emits multiple values over time as the collection gets modified, i.e. its state gets changed
-
+        
     }
 
     onCoursesEdited(){

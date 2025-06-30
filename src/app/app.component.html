@@ -4,10 +4,29 @@
 
   </div>
 
-  <button (click)="onCoursesEdited()" >Edit courses</button>
-
-  <div class="courses" #container>
-      <course-card *ngFor="let course of courses" 
+  <div class="courses" *ngIf="courses[0] as course">
+      <course-card 
         (courseSelected)="onCourseSelected($event)"
-        [course]="course"/>
+        [course]="course"> 
+
+        <div class="course-img">
+          <img width="300" alt="Angular Logo" [src]="course.iconUrl"> <!-- We have one element to display-->
+          <h3>Another HTML element inside the container</h3> <!-- We now have two elements to display thanks to 'class' in the select -->
+        </div>
+
+        <div class="course-description">
+          {{ course.longDescription }}
+        </div>
+
+        Edit description: <textarea name="" id=""></textarea>
+
+      </course-card>
+
+      <course-card 
+        (courseSelected)="onCourseSelected($event)"
+        [course]="courses[1]"> 
+
+          <img width="300" alt="Angular Logo" [src]="courses[1].iconUrl">
+
+      </course-card>
   </div>
