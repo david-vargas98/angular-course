@@ -3,22 +3,35 @@
 </div>
 
   <div class="courses" *ngIf="courses[0] as course">
-      <course-card 
-        (courseSelected)="onCourseSelected($event)"
-        [course]="course"> 
 
-        <course-image [src]="course.iconUrl"></course-image>
-        
-        <course-image [src]="courses[1].iconUrl"></course-image>
+    <ng-template #blankImage let-courseName="description"> <!-- we assign the description value to our 'let-courseName' variable -->
+        <p class="warn"> {{ courseName }} has no image yet.</p>
+        <img src="/assets/empty-image.png" alt="empty-image">
+    </ng-template>
+    
+    <!-- *ngTemplateOutlet is used to instantiate a template, we set the context with course.description for 'description' variable  -->
+    <ng-container *ngTemplateOutlet="blankImage; context: { description : course.description }">
 
-        <course-image [src]="courses[2].iconUrl"></course-image>
+    </ng-container> <!-- ng-Container avoid intantiating a new element on the DOM -->
 
-        <div class="course-description">
-          {{ course.longDescription }}
-        </div>
+    <!-- We can add more instances with different contexts -->
+     <ng-container *ngTemplateOutlet="blankImage; context: { description : courses[1].description }">
 
-        Edit description: <textarea name="" id=""></textarea>
+    </ng-container>
 
-      </course-card>
+    <hr>
+
+    <course-card 
+      (courseSelected)="onCourseSelected($event)"
+      [course]="course"> 
+      <course-image [src]="course.iconUrl"></course-image>
+      
+      <course-image [src]="courses[1].iconUrl"></course-image>
+      <course-image [src]="courses[2].iconUrl"></course-image>
+      <div class="course-description">
+        {{ course.longDescription }}
+      </div>
+      Edit description: <textarea name="" id=""></textarea>
+    </course-card>
 
   </div>

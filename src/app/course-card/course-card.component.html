@@ -4,10 +4,7 @@
     <div class="course-title">
       {{ cardIndex || 'cardIndex not found -' }} {{ course.description }}
     </div>
-    <ng-template #blankImage>
-        <p class="warn"> {{ course.description }} has no image yet.</p>
-        <img src="/assets/empty-image.png" alt="empty-image">
-    </ng-template>
+    
     <!-- The CSS select will restrict what elements will be displayed, for instance, we only get the img using: select="img" -->
      <!-- We can also restrict the content to display using classes, for instance: select=".course-img" i.e, we can display multiple elements -->
     <ng-content select="course-image" *ngIf="course.iconUrl; else blankImage"></ng-content> <!-- This is used to display the image from app.component.html inside the 'course-card' tag -->
