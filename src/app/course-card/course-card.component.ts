@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, input, ViewChild, AfterViewInit, ContentChild, ElementRef, QueryList, ContentChildren } from '@angular/core';
+import { Component, Input, EventEmitter, Output, input, ViewChild, AfterViewInit, ContentChild, ElementRef, QueryList, ContentChildren, TemplateRef } from '@angular/core';
 import { Course } from '../model/course';
 import { CourseImageComponent } from '../course-image/course-image.component';
 
@@ -24,6 +24,9 @@ export class CourseCardComponent implements AfterViewInit {
 
   @Input()
   cardIndex : number
+
+  @Input()
+  noImageTemplate: TemplateRef<any>;
   
   //this creates the event here, in the child component and it says that will emit an event
   @Output('courseSelected') // we can assign another name for the output if we want to: @Output('another), in html:(another)="onCourseSelected($event)" or just leave it empty and it will take the variable name

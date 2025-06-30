@@ -8,22 +8,11 @@
         <p class="warn"> {{ courseName }} has no image yet.</p>
         <img src="/assets/empty-image.png" alt="empty-image">
     </ng-template>
-    
-    <!-- *ngTemplateOutlet is used to instantiate a template, we set the context with course.description for 'description' variable  -->
-    <ng-container *ngTemplateOutlet="blankImage; context: { description : course.description }">
-
-    </ng-container> <!-- ng-Container avoid intantiating a new element on the DOM -->
-
-    <!-- We can add more instances with different contexts -->
-     <ng-container *ngTemplateOutlet="blankImage; context: { description : courses[1].description }">
-
-    </ng-container>
-
-    <hr>
 
     <course-card 
       (courseSelected)="onCourseSelected($event)"
-      [course]="course"> 
+      [course]="course"
+      [noImageTemplate]="blankImage"> 
       <course-image [src]="course.iconUrl"></course-image>
       
       <course-image [src]="courses[1].iconUrl"></course-image>
