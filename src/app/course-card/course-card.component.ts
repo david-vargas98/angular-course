@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, input, ViewChild, AfterViewInit, ContentChild, ElementRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, input, ViewChild, AfterViewInit, ContentChild, ElementRef, QueryList, ContentChildren } from '@angular/core';
 import { Course } from '../model/course';
 import { CourseImageComponent } from '../course-image/course-image.component';
 
@@ -34,11 +34,24 @@ export class CourseCardComponent implements AfterViewInit {
   // @ContentChild(CourseImageComponent) // we can pass a template reference 'container' or the type 'CourseImageComponent'
   // courseImg: CourseCardComponent;
 
-  @ContentChild(CourseImageComponent, {read: ElementRef}) // we can get the native DOM element instead of the component instance
-  courseImg: ElementRef;
+  // @ContentChild(CourseImageComponent, {read: ElementRef}) // we can get the native DOM element instead of the component instance
+  // courseImg: ElementRef;
+
+  // @ContentChildren(CourseImageComponent) // for several objects
+  // courseImages: QueryList<CourseImageComponent>
+
+  @ContentChildren(CourseImageComponent, {read: ElementRef}) // for several objects
+  courseImages: QueryList<ElementRef>
+
+  // @ContentChild(CourseImageComponent, {read: ElementRef}) // we can get the native DOM element instead of the component instance
+  // courseImg: ElementRef;
 
   ngAfterViewInit(): void {
-    console.log(this.courseImg)
+
+  }
+
+  ngAfterContentInit(): void {
+    console.log(this.courseImages);
   }
 
   onCourseViewed(){
