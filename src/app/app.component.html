@@ -1,4 +1,4 @@
-<div class="top-menu">
+<div class="top-menu" highlighted="">
 
     <img class="logo"
          src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
@@ -8,7 +8,8 @@
 
 <div class="courses" *ngIf="courses[0] as course">
 
-    <course-card [highlighted]="true"
+    <course-card highlighted
+            (toggleHighLight)="onToggle($event)"
             (courseSelected)="onCourseSelected($event)"
                  [course]="course">
 
