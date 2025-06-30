@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {COURSES} from '../db-data';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
@@ -24,15 +24,18 @@ export class AppComponent {
     course = COURSES[0];
 
     // viewchild lesson
-    @ViewChild('cardRef1') // instead of the componente name "CourseCardComponent", we can pass a template reference such as 'cardRef1'
+    @ViewChild('cardRef1', { read: ElementRef }) // instead of the componente name "CourseCardComponent", we can pass a template reference such as 'cardRef1'
     card1: CourseCardComponent;
 
     @ViewChild('cardRef2')
     card2: CourseCardComponent;
 
+    // querying plain html elements
+    @ViewChild('container')
+    containerDiv: ElementRef;
+
     onCourseSelected(course:Course){
-        console.log(this.card1)
-        console.log(this.card2)
+        console.log("containerDiv", this.card1) //instead of console.log each element we can take the whole container
     }
     // tracking function  
     trackCourse(index: number, course:Course){
