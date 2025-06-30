@@ -6,7 +6,8 @@
     </div>
     @if (isImageVisible()) {
       <img width="300" alt="Angular Logo"
-        [src]="course.iconUrl">
+        [src]="course.iconUrl"
+        #courseImage> <!-- This reference is inside the child but not inside app-component, so we won't be able to obtain the element using ViewChild -->
     } @else {
       <b><p>No image is available.</p></b>
     }
