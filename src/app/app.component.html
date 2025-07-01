@@ -1,26 +1,44 @@
-<div class="top-menu">
-  <img class="logo" src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
+<div class="top-menu" highlighted="">
+
+    <img class="logo"
+         src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
+
 </div>
 
-  <div class="courses" *ngIf="courses[0] as course">
+<div class="salmon-theme">
 
-    <ng-template #blankImage let-courseName="description"> <!-- we assign the description value to our 'let-courseName' variable -->
-        <p class="warn"> {{ courseName }} has no image yet.</p>
-        <img src="/assets/empty-image.png" alt="empty-image">
-    </ng-template>
-
-    <course-card 
-      (courseSelected)="onCourseSelected($event)"
-      [course]="course"
-      [noImageTemplate]="blankImage"> 
-      <course-image [src]="course.iconUrl"></course-image>
-      
-      <course-image [src]="courses[1].iconUrl"></course-image>
-      <course-image [src]="courses[2].iconUrl"></course-image>
-      <div class="course-description">
-        {{ course.longDescription }}
-      </div>
-      Edit description: <textarea name="" id=""></textarea>
-    </course-card>
-
+  <div class="course-card">
+    Test
   </div>
+
+  <ng-template [ngIf]="courses[0]" let-course>
+  
+      <div class="courses">
+      
+          <course-card highlighted #highlighter="hl"
+                  (toggleHighLight)="onToggle($event)"
+                  (courseSelected)="onCourseSelected($event)"
+                      [course]="course">
+      
+              <course-image [src]="course.iconUrl" *ngxUnless="!course.iconUrl"></course-image>
+              
+                          
+              <!-- <ng-template [ngxUnless]="!course.iconUrl">
+              
+                <course-image [src]="course.iconUrl"></course-image>
+              
+              </ng-template> -->
+            
+              <div class="course-description" 
+                    (dblclick)="highlighter.toggle()">
+                  {{ course.longDescription }}
+              </div>
+            
+          </course-card>
+        
+        
+      </div>
+    
+  </ng-template>
+
+</div>

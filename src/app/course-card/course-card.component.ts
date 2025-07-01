@@ -1,12 +1,27 @@
-import { Component, Input, EventEmitter, Output, input, ViewChild, AfterViewInit, ContentChild, ElementRef, QueryList, ContentChildren, TemplateRef } from '@angular/core';
-import { Course } from '../model/course';
-import { CourseImageComponent } from '../course-image/course-image.component';
+import {
+    AfterContentInit,
+    AfterViewInit,
+    Component,
+    ContentChild,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output, QueryList, TemplateRef,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import {COURSES} from '../../db-data';
+import {Course} from '../model/course';
+import {CourseImageComponent} from '../course-image/course-image.component';
 
 @Component({
-  selector: 'course-card',
-  templateUrl: './course-card.component.html',
-  styleUrls: ['./course-card.component.css'],
-  standalone: false  //we have to explicitly specify that is a standalone component, otherwise, a compilation error will persist
+    selector: 'course-card',
+    templateUrl: './course-card.component.html',
+    styleUrls: ['./course-card.component.css'],
+    encapsulation: ViewEncapsulation.Emulated, // there exists ShadowDom, None and Emulated (default) encapsulations for element components and its CSS
+    standalone: false //we have to explicitly specify that is a standalone component, otherwise, a compilation error will persist
 })
 export class CourseCardComponent implements AfterViewInit {
   // //we need to import the Input on top

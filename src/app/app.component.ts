@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import {COURSES} from '../db-data';
-import { Course } from './model/course';
-
+import {Course} from './model/course';
+import {CourseCardComponent} from './course-card/course-card.component';
+import { HighlightedDirective } from './directives/highlighted.directive';
 
 
 @Component({
@@ -12,7 +13,15 @@ import { Course } from './model/course';
 })
 export class AppComponent implements AfterViewInit {
 
-    courses = COURSES; //it contains the list of all courses
+    courses = COURSES;
+
+    // a direct way to get the 'HighlightedDirective' directive from the element of 'CourseCardComponent' type
+    @ViewChild(CourseCardComponent, { read: HighlightedDirective})
+    highlighted: HighlightedDirective;
+
+
+    @ViewChildren(CourseCardComponent, {read: ElementRef})
+    cards : QueryList<ElementRef>;
 
 
     // constructor
@@ -20,9 +29,13 @@ export class AppComponent implements AfterViewInit {
 
     }
 
-    // the earliest possible moment where all the references pupulated by ViewChild are available, and it is called by the framework itself 
-    ngAfterViewInit(): void {
+    onToggle(isHighLighted: boolean){
         
+        console.log(isHighLighted)
+    }
+
+    ngAfterViewInit() {
+        console.log(this.highlighted)
     }
 
     onCoursesEdited(){
