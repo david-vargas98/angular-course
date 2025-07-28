@@ -20,7 +20,11 @@ import { CoursesService } from '../services/courses.service';
     selector: 'course-card',
     templateUrl: './course-card.component.html',
     styleUrls: ['./course-card.component.css'],
-    standalone: false
+    standalone: false,
+    // providers: [
+    //     CoursesService // this is needed to create multiple instances,  however, the provider/dependency is still loaded, 
+    //                      since the child component asks to its multiple parent components for the dependency
+    // ]
 })
 export class CourseCardComponent implements OnInit {
 
@@ -39,7 +43,7 @@ export class CourseCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.coursesService)
+        console.log("coursesService course card", this.coursesService.id);
     }
 
 
