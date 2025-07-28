@@ -12,11 +12,7 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    standalone: false,
-    providers: [
-      //{provide: CONFIG_TOKEN, useFactory: () => APP_CONFIG} // executes a function to get "APP_CONFIG" (if you want more logic) 
-      {provide: CONFIG_TOKEN, useValue: APP_CONFIG} // we can also use "useValue" which injects the actual "APP_CONFIG" object
-    ]
+    standalone: false
 })
 export class AppComponent implements OnInit {
 
@@ -24,7 +20,6 @@ export class AppComponent implements OnInit {
 
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
   constructor(private coursesService: CoursesService, @Inject(CONFIG_TOKEN) private config: AppConfig) {
-    
     console.log(config);
   }
 

@@ -11,4 +11,10 @@ export const APP_CONFIG:AppConfig = {
     courseCacheSize: 10
 }
 // injection token, by making the plain Js object above injectable
-export const CONFIG_TOKEN = new InjectionToken<AppConfig>('CONFIG_TOKEN')
+export const CONFIG_TOKEN = new InjectionToken<AppConfig>(
+    'CONFIG_TOKEN', 
+    { 
+        providedIn: 'root', // token avaiable to global scope
+        factory: () => APP_CONFIG // this is how we get the value and "APP_CONFIG" will be included only if it's really NECESSARY
+    }
+)
