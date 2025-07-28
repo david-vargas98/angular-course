@@ -5,7 +5,18 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 let counter = 0;
 
-@Injectable()
+// @Injectable({ // this is a manual provider function for our CousesService dependency
+//   providedIn: 'root', // mandatory property which says where should be this service instantiated, this case, the application root
+//   useFactory: (http) => new CoursesService(http),  // instantiation of the CoursesService object
+//   deps: [HttpClient] // dependency for the factory function (useFactory)
+// })
+// @Injectable({ // manual provider function for our CousesService dependency but using "useClass", whitout using the factory function
+//   providedIn: 'root',
+//   useClass: CoursesService
+// })
+@Injectable({ // or even, if we get rid of useClass, the application will continue to work properly
+  providedIn: 'root'
+})
 export class CoursesService {
 
   id: number; // identifier for each instance
