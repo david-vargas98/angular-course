@@ -8,6 +8,7 @@ import {
     Inject,
     Input,
     OnInit,
+    Optional,
     Output,
     QueryList,
     ViewEncapsulation
@@ -38,12 +39,12 @@ export class CourseCardComponent implements OnInit {
     courseEmitter = new EventEmitter<Course>();
 
 
-    constructor(private coursesService: CoursesService) {
+    constructor(@Optional() private coursesService: CoursesService) {
 
     }
 
     ngOnInit() {
-        
+
     }
 
 
