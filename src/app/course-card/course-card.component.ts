@@ -22,11 +22,7 @@ import { CoursesService } from '../services/courses.service';
     selector: 'course-card',
     templateUrl: './course-card.component.html',
     styleUrls: ['./course-card.component.css'],
-    standalone: false,
-    providers: [
-        CoursesService // this is needed to create multiple instances,  however, the provider/dependency is still loaded, 
-                       // since the child component asks to its multiple parent components for the dependency
-    ]
+    standalone: false
 })
 export class CourseCardComponent implements OnInit {
 
@@ -45,7 +41,7 @@ export class CourseCardComponent implements OnInit {
     // @SkipSelf overrides the default behaviour of dependency injection: this forces "CoursesService" dependency 
     // to ONLY come from a parent component, and not from the current component. So, the instance will not be searched from 
     // using the local provider "providers:[]".
-    constructor(@SkipSelf() private coursesService: CoursesService) {
+    constructor(private coursesService: CoursesService) {
 
     }
 

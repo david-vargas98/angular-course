@@ -14,7 +14,9 @@ let counter = 0;
 //   providedIn: 'root',
 //   useClass: CoursesService
 // })
-@Injectable()
+@Injectable({ // or even, if we get rid of useClass, the application will continue to work properly
+  providedIn: 'root'
+})
 export class CoursesService {
 
   id: number; // identifier for each instance

@@ -14,8 +14,8 @@ export class HighlightedDirective {
     @Output()
     toggleHighlight = new EventEmitter();
 
-    // @Host decorator: ensures that the dependency that gets injected here is coming from the host element
-    constructor(@Host() private coursesService: CoursesService) {
+    // @Host decorator: ensures that the dependency that gets injected here is coming from the host
+    constructor(private coursesService: CoursesService) {
 
         console.log('Directive created..');
         console.log('coursesService highlighted directive ' + coursesService.id);
