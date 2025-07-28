@@ -17,7 +17,8 @@
 
     <course-card *ngFor="let course of courses"
                  [course]="course"
-                 (courseChanged)="save($event)">
+                 (courseChanged)="save($event)"
+                 type="beginner"> <!--Another input property-->
 
       <course-image [src]="course.iconUrl"></course-image>
 

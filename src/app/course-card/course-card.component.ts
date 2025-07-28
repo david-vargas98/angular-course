@@ -1,6 +1,7 @@
 import {
     AfterContentInit,
     AfterViewInit,
+    Attribute,
     ChangeDetectionStrategy,
     Component,
     ContentChildren,
@@ -43,8 +44,8 @@ export class CourseCardComponent implements OnInit {
     // @SkipSelf overrides the default behaviour of dependency injection: this forces "CoursesService" dependency 
     // to ONLY come from a parent component, and not from the current component. So, the instance will not be searched from 
     // using the local provider "providers:[]".
-    constructor(private coursesService: CoursesService) {
-
+    constructor(private coursesService: CoursesService, @Attribute('type') private type: string) {
+        console.log(type)
     }
 
     ngOnInit() {
