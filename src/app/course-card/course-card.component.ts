@@ -11,6 +11,7 @@ import {
     Output,
     QueryList,
     Self,
+    SkipSelf,
     ViewEncapsulation
 } from '@angular/core';
 import {Course} from '../model/course';
@@ -40,7 +41,11 @@ export class CourseCardComponent implements OnInit {
 
     // @Self overrides the default behaviour of dependency injection: this forces "CoursesService" dependency 
     // to not come from a parent component, but ONLY from the component itself.
-    constructor(@Self() private coursesService: CoursesService) {
+
+    // @SkipSelf overrides the default behaviour of dependency injection: this forces "CoursesService" dependency 
+    // to ONLY come from a parent component, and not from the current component. So, the instance will not be searched from 
+    // using the local provider "providers:[]".
+    constructor(@SkipSelf() private coursesService: CoursesService) {
 
     }
 
