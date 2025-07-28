@@ -1,6 +1,7 @@
 import {
     AfterContentInit,
     AfterViewInit,
+    ChangeDetectionStrategy,
     Component,
     ContentChildren,
     ElementRef,
@@ -22,7 +23,8 @@ import { CoursesService } from '../services/courses.service';
     selector: 'course-card',
     templateUrl: './course-card.component.html',
     styleUrls: ['./course-card.component.css'],
-    standalone: false
+    standalone: false,
+    changeDetection: ChangeDetectionStrategy.OnPush // avoids using default behaviour, so, angular won't try to detect changes  
 })
 export class CourseCardComponent implements OnInit {
 
@@ -49,6 +51,10 @@ export class CourseCardComponent implements OnInit {
 
     }
 
+    onTitleChanged(newTitle: string){
+        
+        this.course.description = newTitle;
+    }
 
     onSaveClicked(description:string) {
 

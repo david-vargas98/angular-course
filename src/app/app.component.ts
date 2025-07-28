@@ -16,17 +16,30 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
 })
 export class AppComponent implements OnInit {
 
+  courses = COURSES;
+
   courses$ : Observable<Course[]>;
 
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
   constructor(private coursesService: CoursesService, @Inject(CONFIG_TOKEN) private config: AppConfig) {
-    console.log(config);
+
   }
 
   ngOnInit() {   
-    
-    this.courses$ = this.coursesService.loadCourses();
-    
+        
+  }
+
+  onEditCourse(){
+
+    const course = this.courses[0]; // we create a "course", and we get the "courses[0]" object
+
+    const newCourse: any = {...course} // copy of "course" using spread operator: allow us to create a new reference, this is needed 
+                                       // since "OnPush" doesn't detect the changes if we don't change the obj reference
+
+    newCourse.description = 'New Value'; // we assign the new value to the new reference
+
+    this.courses[0] = newCourse; // we assing the new reference object to the original object
+
   }
 
   save(course: Course){

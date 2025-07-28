@@ -7,9 +7,15 @@
 
 <div>
 
-  <div class="courses" *ngIf="courses$ | async as courses">
+  <div class="demo">
 
-    <course-card highlighted *ngFor="let course of courses"
+    <button (click)="onEditCourse()" >Edit Course</button>
+
+  </div>
+
+  <div class="courses">
+
+    <course-card *ngFor="let course of courses"
                  [course]="course"
                  (courseChanged)="save($event)">
 
