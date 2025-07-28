@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, InjectionToken, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {COURSES} from '../db-data';
 import {Course} from './model/course';
 import {CourseCardComponent} from './course-card/course-card.component';
@@ -15,17 +15,40 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
     standalone: false,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, DoCheck {
 
-  courses$ : Observable<Course[]>;
+  courses: Course[];
+
+  loaded = false;
 
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
-  constructor(private coursesService: CoursesService, @Inject(CONFIG_TOKEN) private config: AppConfig) {
-
+  constructor(private coursesService: CoursesService, 
+              @Inject(CONFIG_TOKEN) private config: AppConfig, 
+              private changeDetector: ChangeDetectorRef) { // change detector for this component
   }
 
-  ngOnInit() {   
-    this.courses$ = this.coursesService.loadCourses();
+  // this method is going to be called every time that angular is running change detection in a given component
+  // if you want to do custom change detection, this is the write lifecycle hook to use
+  ngDoCheck() {
+    console.log("ngDoCheck")
+    if(this.loaded){
+      this.changeDetector.markForCheck(); // this says to angular: "This component should be checked for changes!"
+      console.log("called cd.markForCheck() ")
+      this.loaded = undefined;
+    }
+  }
+
+  ngOnInit() {
+    
+    this.coursesService.loadCourses().subscribe(courses => {
+
+      this.courses = courses;
+
+      this.loaded = true;
+
+      //this.changeDetector.markForCheck() // this says to angular: "This component should be checked for changes!"
+
+    });
   }
 
   onEditCourse(){
