@@ -8,9 +8,9 @@ import {
     Inject,
     Input,
     OnInit,
-    Optional,
     Output,
     QueryList,
+    Self,
     ViewEncapsulation
 } from '@angular/core';
 import {Course} from '../model/course';
@@ -22,10 +22,10 @@ import { CoursesService } from '../services/courses.service';
     templateUrl: './course-card.component.html',
     styleUrls: ['./course-card.component.css'],
     standalone: false,
-    // providers: [
-    //     CoursesService // this is needed to create multiple instances,  however, the provider/dependency is still loaded, 
-    //                      since the child component asks to its multiple parent components for the dependency
-    // ]
+    providers: [
+        CoursesService // this is needed to create multiple instances,  however, the provider/dependency is still loaded, 
+                       // since the child component asks to its multiple parent components for the dependency
+    ]
 })
 export class CourseCardComponent implements OnInit {
 
@@ -38,8 +38,9 @@ export class CourseCardComponent implements OnInit {
     @Output('courseChanged')
     courseEmitter = new EventEmitter<Course>();
 
-
-    constructor(@Optional() private coursesService: CoursesService) {
+    // @Self overrides the default behaviour of dependency injection: this forces "CoursesService" dependency 
+    // to not come from a parent component, but ONLY from the component itself.
+    constructor(@Self() private coursesService: CoursesService) {
 
     }
 
