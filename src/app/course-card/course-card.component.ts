@@ -8,6 +8,7 @@ import {
     ChangeDetectorRef,
     Component,
     ContentChildren,
+    DoCheck,
     ElementRef,
     EventEmitter,
     Inject,
@@ -32,7 +33,8 @@ import { CoursesService } from '../services/courses.service';
     styleUrls: ['./course-card.component.css'],
     standalone: false // avoids using default behaviour, so, angular won't try to detect changes  
 })
-export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked, AfterViewChecked {
+export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked, AfterViewChecked, 
+    AfterContentInit, AfterViewInit, DoCheck {
 
     @Input()
     course: Course;
@@ -43,7 +45,8 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
     @Output('courseChanged')
     courseEmitter = new EventEmitter<Course>();
 
-    // constructor should only be used for taking dependencies and save them in member variables (component variables) 
+    // constructor should only be used for taking dependencies and save them in member variables (component variables)
+    // we DON'T initialize anythin in here
     constructor(private coursesService: CoursesService, 
         @Attribute('type') private type: string) {
             console.log("constructor", this.course) // component inputs such as "course" are not initiliazed yet
@@ -51,13 +54,40 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
 
     // this lifecycle hook is called by angular whenever something occurs in the component lifecycle
     // this method is not meant for us to call it directly, also takes an argument, the "changes argument"
+
+    // ----- Is called every time that there is a change detection run in our application ----- //
     ngOnChanges(changes) {
         console.log("ngOnChanges", changes)
     }
 
-    // if the component has any initialization logic, this is the correct place to put that logic  
+    // if the component has any initialization logic, this is the correct place to put that logic
+    // also this is the right place to implement initialization logic, instead of putting it inside the constructor
     ngOnInit() {
         console.log("ngOnInit", this.course) // otherwise, the "course" omponent input (variable) is now initialized
+    }
+    
+    // best place to implement any custom change detection logic that we might need: this should occur only in rare occasions but 
+    // but if we need it, this is the correct lifecycle hook to call.
+
+    // ----- Is called every time that there is a change detection run in our application ----- //
+    ngDoCheck() {
+        console.log("ngDoCheck");
+    }
+
+    // Here, angular is going to initialize the content part of the component: so if you're doing here any content, child or 
+    // content children queries at the level of our component, this is the best place to put any initialization logic that might 
+    // need variables that are populated using content shell, or content children
+    ngAfterContentInit() {
+        console.log("ngAfterContentInit");
+    }
+
+    // in a similar way, if we do any queires in our component to the template itself using, for example the @ViewChild decorator, 
+    // then, any initialization logic that needs variables populated by view child should be put here in ngAfterViewInit.
+
+    // So, all of these methods: ngOnInit, ngAfterContentInit and ngAfterViewInit are each going to be called once during the 
+    // whole life cycle of the component and in this order: ngOnInit -> ngAfterContentInit -> ngAfterViewInit
+    ngAfterViewInit() {
+        console.log("ngAfterViewInit");
     }
 
     //this lifecycle hook is called whenever angular checks the content part of this component, which is between "ng-content"
@@ -65,6 +95,8 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
     // if logic is implemented here we need to be careful, since we perform high-cost operations, performance will decrease
     // If you are looking for a place to modify some data last secondafter each change detection cycle, this is the place to do it
     // but, be aware you won't be able to modufy properties that are part of the content/part of the component
+
+    // ----- Is called every time that there is a change detection run in our application ----- //
     ngAfterContentChecked() {
 
         console.log("ngAfterContentChecked")
@@ -89,6 +121,8 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
     // as had been said, this method could be useful to perform common DOM operations, such as scrolling to the bottom of a list 
     // setting the focus of a given element etc, elements that were not present in the beginning of the change detection execution 
     // The code that we'll put in here must be very lighweight. Heavy operations will slow down the application performance
+
+    // ----- Is called every time that there is a change detection run in our application ----- //
     ngAfterViewChecked() {
         console.log("ngAfterViewChecked");
 
@@ -97,7 +131,8 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
     }
 
     // this lifecycle hook is called whenever the component gets destroyed, is a great place for relesing any resources such as
-    // long running observables, also this is the reight place to unsuscribe from connections if you want to
+    // long running observables (sync pipe is better, though), also this is the right place to unsuscribe from connections 
+    // if you want to
     ngOnDestroy() {
         console.log("ngOnDestroy");
     }
