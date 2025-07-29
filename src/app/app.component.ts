@@ -12,8 +12,7 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    standalone: false,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    standalone: false
 })
 export class AppComponent implements OnInit, DoCheck {
 

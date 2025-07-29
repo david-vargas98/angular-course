@@ -1,6 +1,7 @@
 import {
     AfterContentChecked,
     AfterContentInit,
+    AfterViewChecked,
     AfterViewInit,
     Attribute,
     ChangeDetectionStrategy,
@@ -29,10 +30,9 @@ import { CoursesService } from '../services/courses.service';
     selector: 'course-card',
     templateUrl: './course-card.component.html',
     styleUrls: ['./course-card.component.css'],
-    standalone: false,
-    changeDetection: ChangeDetectionStrategy.OnPush // avoids using default behaviour, so, angular won't try to detect changes  
+    standalone: false // avoids using default behaviour, so, angular won't try to detect changes  
 })
-export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked {
+export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked, AfterViewChecked {
 
     @Input()
     course: Course;
@@ -77,10 +77,29 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
         
     }
 
+    // in this lifecycle hook, the component "<course-card>" executes "ngAfterViewChecked()", occurs after rendering the component 
+    // template, i.e. after ngAfterViewInit(). Agter each change detection on the view component, on each detection cycle, while 
+    // pressing a button or making an input change. 
+    // we can't modify the data displayed by the component, since the DOM has already been rendered and checked
+
+    // it could be useful while implementing a scroll logic for a list of cards, cause' at this point the new elements have been 
+    // already applied by angular to the DOM, so if we call scroll at that moment in time, then we will efectively see some 
+    // scrolling on the screen
+
+    // as had been said, this method could be useful to perform common DOM operations, such as scrolling to the bottom of a list 
+    // setting the focus of a given element etc, elements that were not present in the beginning of the change detection execution 
+    // The code that we'll put in here must be very lighweight. Heavy operations will slow down the application performance
+    ngAfterViewChecked() {
+        console.log("ngAfterViewChecked");
+
+        //this.course.description = "ngAfterViewChecked"; // a NG0100 error will be thrown if angular finds something that has changed 
+                                                        // between the first and second verification whithin the same cycle.
+    }
+
     // this lifecycle hook is called whenever the component gets destroyed, is a great place for relesing any resources such as
     // long running observables, also this is the reight place to unsuscribe from connections if you want to
     ngOnDestroy() {
-        console.log("ngOnDestroy")
+        console.log("ngOnDestroy");
     }
 
     onTitleChanged(newTitle: string){
