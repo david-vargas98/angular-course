@@ -45,7 +45,16 @@ export class AppComponent implements OnInit, DoCheck {
 
   onEditCourse(){
 
-    this.courses = [undefined]
+    //this.courses[0].description = "ngOnChanges"; // this is not detected by angular as a change, only @Input properties are
+
+    const course = this.courses[0]; // we get the first course "[0]"
+
+    const newCourse = {  // we create the new object
+      ...course,
+      description: "ngOnChanges"
+    };
+
+    this.courses[0] = newCourse; // we assign the new object, angular will detect a change since it's a different obj reference
 
   }
 

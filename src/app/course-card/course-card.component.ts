@@ -10,11 +10,13 @@ import {
     EventEmitter,
     Inject,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
     Output,
     QueryList,
     Self,
+    SimpleChanges,
     SkipSelf,
     ViewEncapsulation
 } from '@angular/core';
@@ -29,7 +31,7 @@ import { CoursesService } from '../services/courses.service';
     standalone: false,
     changeDetection: ChangeDetectionStrategy.OnPush // avoids using default behaviour, so, angular won't try to detect changes  
 })
-export class CourseCardComponent implements OnInit, OnDestroy {
+export class CourseCardComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input()
     course: Course;
@@ -46,10 +48,17 @@ export class CourseCardComponent implements OnInit, OnDestroy {
             console.log("constructor", this.course) // component inputs such as "course" are not initiliazed yet
     }
 
+    // this lifecycle hook is called by angular whenever something occurs in the component lifecycle
+    // this method is not meant for us to call it directly, also takes an argument, the "changes argument"
+    ngOnChanges(changes) {
+        console.log("ngOnChanges", changes)
+    }
+
     // if the component has any initialization logic, this is the correct place to put that logic  
     ngOnInit() {
         console.log("ngOnInit", this.course) // otherwise, the "course" omponent input (variable) is now initialized
     }
+
 
     // this lifecycle hook is called whenever the component gets destroyed, is a great place for relesing any resources such as
     // long running observables, also this is the reight place to unsuscribe from connections if you want to
