@@ -5,11 +5,8 @@ import { NgModule } from '@angular/core';
 // components and directives that are part of the application
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CourseCardComponent } from './course-card/course-card.component';
-import { CourseImageComponent } from './course-image/course-image.component';
-import { HighlightedDirective } from './directives/highlighted.directive';
-import { NgxUnlessDirective } from './directives/ngx-unless.directive';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { CoursesModule } from './courses/courses.module';
 
 /**
  * Angular module: is an organizational unit where we can put together components, directives and services that are tighly related 
@@ -26,11 +23,11 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 // Providers: Global services are defined in here, available throughout the app.
 @NgModule({ declarations: [
         AppComponent,
-        CourseCardComponent,
-        CourseImageComponent,
-        HighlightedDirective,
-        NgxUnlessDirective
+        //CourseCardComponent, // we can get rif of it since now is implicitly invoked from 'courses.module'
+        //CourseImageComponent, // this component as well is implicitly invoked from 'courses.module'
+        //HighlightedDirective,
+        //NgxUnlessDirective
     ],
     bootstrap: [AppComponent], imports: [BrowserModule, 
-        BrowserAnimationsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        BrowserAnimationsModule, CoursesModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
