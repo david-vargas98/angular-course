@@ -17,7 +17,7 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
 })
 export class AppComponent implements OnInit, DoCheck {
 
-  courses: Course[];
+  courses: Course[] = COURSES;
 
   loaded = false;
 
@@ -40,20 +40,12 @@ export class AppComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     
-    this.coursesService.loadCourses().subscribe(courses => {
-
-      this.courses = courses;
-
-      this.loaded = true;
-
-      //this.changeDetector.markForCheck() // this says to angular: "This component should be checked for changes!"
-
-    });
+    
   }
 
   onEditCourse(){
 
-    
+    this.courses = [undefined]
 
   }
 
