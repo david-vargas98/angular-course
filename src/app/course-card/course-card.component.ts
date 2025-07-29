@@ -1,4 +1,5 @@
 import {
+    AfterContentChecked,
     AfterContentInit,
     AfterViewInit,
     Attribute,
@@ -31,7 +32,7 @@ import { CoursesService } from '../services/courses.service';
     standalone: false,
     changeDetection: ChangeDetectionStrategy.OnPush // avoids using default behaviour, so, angular won't try to detect changes  
 })
-export class CourseCardComponent implements OnInit, OnDestroy, OnChanges {
+export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked {
 
     @Input()
     course: Course;
@@ -59,6 +60,22 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges {
         console.log("ngOnInit", this.course) // otherwise, the "course" omponent input (variable) is now initialized
     }
 
+    //this lifecycle hook is called whenever angular checks the content part of this component, which is between "ng-content"
+    // so, this method is gonna be called with EVERY EVENT that angular is handling
+    // if logic is implemented here we need to be careful, since we perform high-cost operations, performance will decrease
+    // If you are looking for a place to modify some data last secondafter each change detection cycle, this is the place to do it
+    // but, be aware you won't be able to modufy properties that are part of the content/part of the component
+    ngAfterContentChecked() {
+
+        console.log("ngAfterContentChecked")
+
+        this.course.description = "ngAfterContentChecked";
+
+        this.course.category = "ADVANCED";
+
+        //this.course.iconUrl = ""; // this is not allowed, since, this property is used in the content part of the course, ERROR
+        
+    }
 
     // this lifecycle hook is called whenever the component gets destroyed, is a great place for relesing any resources such as
     // long running observables, also this is the reight place to unsuscribe from connections if you want to
