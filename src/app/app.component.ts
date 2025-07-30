@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {COURSES} from '../db-data';
 import {Course} from './model/course';
 import {CourseCardComponent} from './courses/course-card/course-card.component';
@@ -7,6 +7,8 @@ import {Observable} from 'rxjs';
 import { CoursesService } from './courses/courses.service';
 import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
+import { CourseTitleComponent } from './course-title/course-title.component';
+import { createCustomElement } from '@angular/elements';
 
 @Component({
     selector: 'app-root',
@@ -25,7 +27,8 @@ export class AppComponent implements OnInit, DoCheck {
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
   constructor(private coursesService: CoursesService, 
               @Inject(CONFIG_TOKEN) private config: AppConfig, 
-              private changeDetector: ChangeDetectorRef) { // change detector for this component
+              private changeDetector: ChangeDetectorRef, // change detector for this component
+              private injector: Injector) { 
   }
 
   // this method is going to be called every time that angular is running change detection in a given component
@@ -41,7 +44,18 @@ export class AppComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     
+    // Instantiation of angular component
+    // Converts a angular component into a browser's standard custom element (web component)
+    // its second parameter is mandatory, since the component can use injectable services; angular needs to know how to solve 
+    // those dependencies internally, that's why we're passing the current module's injector:
+    const htmlElement = createCustomElement(CourseTitleComponent, {injector: this.injector});
     
+    // This registers the new element from above into the browser, so now:
+    // course-title will be reognize as a valid HTML element, so now <course-title></course-title> could be use in any place 
+    // of the DOM (even outside from angular, maybe in React, Vue or pure HTML)
+    // A custom element could be registered only once, that's sometimes we do: 
+    // if (!customElements.get('course-title')) { customElements.define('course-title', htmlElement); }
+    customElements.define('course-title', htmlElement)
   }
 
   onEditCourse(){
