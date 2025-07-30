@@ -4,6 +4,7 @@
     <body>
       <trans-unit id="5048677437444385397" datatype="html">
         <source>Edit Course</source>
+        <target>Medifier des Cours</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">11,13</context>
@@ -11,6 +12,7 @@
       </trans-unit>
       <trans-unit id="7237794061041813530" datatype="html">
         <source>{VAR_PLURAL, plural, =0 {No courses available.} =1 {One course is available.} other {A total of <x id="INTERPOLATION"/> courses are available.}}</source>
+        <target>{VAR_PLURAL, plural, =0 {Pas des cours disponible.} =1 {Un cours dosponible.} other {Au total, <x id="INTERPOLATION"/> cours sont disponibles.}}</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">13,19</context>
@@ -18,6 +20,7 @@
       </trans-unit>
       <trans-unit id="WelcomeMessage" datatype="html">
         <source>Welcome to the angular core deep dive course</source>
+        <target>Bienvenue au Cours Angular en Détail</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">25,30</context>
@@ -40,6 +43,7 @@
       </trans-unit>
       <trans-unit id="4587612384756081379" datatype="html">
         <source>{VAR_SELECT, select, BEGINNER {Beginner} INTERMEDIATE {Intermediate} ADVANCED {Advanced}}</source>
+        <target>{VAR_SELECT, select, BEGINNER {Débutant} INTERMEDIATE {Intermediare} ADVANCED {Avancé}}</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/courses/course-card/course-card.component.html</context>
           <context context-type="linenumber">21,28</context>
