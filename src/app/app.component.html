@@ -24,7 +24,7 @@
       <!-- If we want to add manually a unique identifier we can do so by adding 2 @s and the identifier name: @@identifier-->
     <h4 i18n="welcome message|Greet the user a greeting at the beginning of the course@@WelcomeMessage">Welcome to the angular core deep dive course</h4>
 
-    <course-card *ngFor="let course of courses | filterByCategory: 'BEGINNER' "
+    <course-card *ngFor="let course of courses"
                  [course]="course"
                  (courseChanged)="save($event)"
                  type="beginner"> <!--Another input property-->

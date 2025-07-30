@@ -13,13 +13,27 @@
 
   </div>
 
-  <div class="course-category" [ngSwitch]="course.category">
+  <div class="course-category">
 
-    <div class="category" *ngSwitchCase="'BEGINNER'">Beginner</div>
+    <div class="category" i18n>
 
-    <div class="category" *ngSwitchCase="'INTERMEDIATE'">Intermediate</div>
+      {
+        course.category,
+        select, 
+        BEGINNER {Beginner}
+        INTERMEDIATE {Intermediate}
+        ADVANCED {Advanced}
+      }
 
-    <div class="category" *ngSwitchCase="'ADVANCED'">Advanced</div>
+      <!-- {
+        course.category, // This is going to trigger our alternative choice in this case
+        select, // this indicates a selection of alternative expressions
+        BEGINNER {Beginner} // Multiple cases we have avaailable for our expression
+        INTERMEDIATE {Intermediate}
+        ADVANCED {Advanced}
+      } -->
+
+    </div>
 
   </div>
 
