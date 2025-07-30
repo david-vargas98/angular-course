@@ -44,16 +44,14 @@ export class AppComponent implements OnInit, DoCheck {
 
   onEditCourse(){
 
-    //this.courses[0].description = "ngOnChanges"; // this is not detected by angular as a change, only @Input properties are
+    this.courses[1].category = "ADVANCED"; // if we click on edit button this will change, however the pipeline won't be applied
+                                            // so, mutating the input data of the pipe durectly will not cause this type of pipe
+                                            // to be retriggered on every change detection cycle, angular does this as optimization
+                                            // this is because a calculation of a pipe is potencially an expensive operation
+                                            // and angular wants to perform this operation a minimal number of times
+                                            // so the pipe will be called only if the input of the pipe changes
+                                            // THIS IS A PURE PIPE, the type that gets called only if the input data changes
 
-    const course = this.courses[0]; // we get the first course "[0]"
-
-    const newCourse = {  // we create the new object
-      ...course,
-      description: "ngOnChanges"
-    };
-
-    this.courses[0] = newCourse; // we assign the new object, angular will detect a change since it's a different obj reference
 
   }
 
