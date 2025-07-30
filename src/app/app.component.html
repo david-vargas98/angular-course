@@ -8,12 +8,19 @@
 <div>
 
   <div class="demo">
-
-    <button (click)="onEditCourse()" >Edit Course</button>
-
+    <button (click)="onEditCourse()" i18n>Edit Course</button>
+    
   </div>
 
   <div class="courses">
+    
+    <!-- i18n is a custom attribute that tools such as the angular CLI are going to use to extract the string -->
+     <!-- The command which needs to be run was: "ng xi18n", and now for angular 14+ is: "ng extract-i18n" -->
+      <!-- Changing the message to display (content) and the meaning will change the "trans-unit id" of the translation -->
+    <!-- i18n attribute is used to give a description of the message and we use pipeline to give context -->
+     <!-- It has the following form: i18n="meaning|description" -->
+      <!-- If we want to add manually a unique identifier we can do so by adding 2 @s and the identifier name: @@identifier-->
+    <h4 i18n="welcome message|Greet the user a greeting at the beginning of the course@@WelcomeMessage">Welcome to the angular core deep dive course</h4>
 
     <course-card *ngFor="let course of courses | filterByCategory: 'BEGINNER' "
                  [course]="course"
