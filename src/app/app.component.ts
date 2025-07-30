@@ -20,6 +20,8 @@ export class AppComponent implements OnInit, DoCheck {
 
   loaded = false;
 
+  coursesTotal = this.courses.length;  // total number of courses available in the course array.
+
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
   constructor(private coursesService: CoursesService, 
               @Inject(CONFIG_TOKEN) private config: AppConfig, 
