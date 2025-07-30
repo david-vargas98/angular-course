@@ -9,12 +9,19 @@ import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
 import { CourseTitleComponent } from './course-title/course-title.component';
 import { createCustomElement } from '@angular/elements';
+import { CourseImageComponent } from './courses/course-image/course-image.component';
+import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    standalone: false
+    standalone: true, // chnaged to true
+    imports: [
+      CourseCardComponent, // we need to make the import from each component
+      CourseImageComponent,
+      NgFor // instead of CommonModule which contains all class directives, we just import ngFor which is what we only need
+    ]
 })
 export class AppComponent implements OnInit, DoCheck {
 

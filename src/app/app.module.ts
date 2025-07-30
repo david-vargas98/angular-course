@@ -22,12 +22,12 @@ import { CoursesModule } from './courses/courses.module';
 // Imports: BrowserModule-> allows angular to work on the browser; BrowserAnimationsModule -> necessary if you use animations
 // Providers: Global services are defined in here, available throughout the app.
 @NgModule({ declarations: [
-        AppComponent,
-        //CourseCardComponent, // we can get rif of it since now is implicitly invoked from 'courses.module'
-        //CourseImageComponent, // this component as well is implicitly invoked from 'courses.module'
-        //HighlightedDirective,
-        //NgxUnlessDirective
+    // the declarations array shouldn't contain any declarations, since we want the components to be standalone
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule, 
-        BrowserAnimationsModule, CoursesModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule, 
+        CoursesModule
+    ], 
+    providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
