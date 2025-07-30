@@ -26,12 +26,15 @@ import {
 import {Course} from '../../model/course';
 import {CourseImageComponent} from '../course-image/course-image.component';
 import { CoursesService } from '../courses.service';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
     selector: 'course-card',
     templateUrl: './course-card.component.html',
     styleUrls: ['./course-card.component.css'],
-    standalone: false // avoids using default behaviour, so, angular won't try to detect changes  
+    standalone: true,
+    imports: [/*CommonModule*/ NgIf] // CommonModule includes ngIf, ngSwith for standalone components, but in this instance the
+                            // ngIf used to show the cards in course-card.component.html
 })
 export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked, AfterViewChecked, 
     AfterContentInit, AfterViewInit, DoCheck {

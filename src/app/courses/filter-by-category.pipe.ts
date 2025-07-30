@@ -3,7 +3,7 @@ import { Course } from "../model/course";
 
 @Pipe({
     name: 'filterByCategory',
-    standalone: false,
+    standalone: true, // changed to standalone
     pure: false // if we want to make this pipe get executed for example, when a property value changes, just add pure property
                 // so this way, the inpure pipe is going to get called in every angular change detection cycle  
 })

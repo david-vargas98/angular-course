@@ -8,25 +8,20 @@ import { NgxUnlessDirective } from './directives/ngx-unless.directive';
 import { FilterByCategoryPipe } from './filter-by-category.pipe';
 
 
+// we get rid of declarations and exports array contents since they will be standalone
 
 @NgModule({
   declarations: [
-    CourseCardComponent, // this component now is part of the courses module
-    CourseImageComponent,
-    HighlightedDirective,
-    NgxUnlessDirective,
-    FilterByCategoryPipe
+
   ],
   providers:[
-    CoursesService
+
   ],
   imports: [
-    CommonModule // this contains the common directives such as ngFor, ngIf, etc.
+  // we get rid of CommonModule, this is already imported in the pertinent components (or better separated components one by one)
   ],
   exports: [
-    CourseCardComponent,
-    CourseImageComponent,
-    FilterByCategoryPipe
+
   ]
 })
 export class CoursesModule { }

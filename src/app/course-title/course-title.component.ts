@@ -4,7 +4,8 @@ import { Component, Input } from '@angular/core';
   selector: 'course-title',
   imports: [],
   templateUrl: './course-title.component.html',
-  styleUrl: './course-title.component.css'
+  styleUrl: './course-title.component.css',
+  standalone: true // changed to standalone
 })
 export class CourseTitleComponent {
 
