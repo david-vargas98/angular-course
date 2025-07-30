@@ -101,9 +101,9 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
 
         console.log("ngAfterContentChecked")
 
-        this.course.description = "ngAfterContentChecked";
+        // this.course.description = "ngAfterContentChecked";
 
-        this.course.category = "ADVANCED";
+        // this.course.category = "ADVANCED";
 
         //this.course.iconUrl = ""; // this is not allowed, since, this property is used in the content part of the course, ERROR
         
