@@ -78,9 +78,17 @@
                 1s condition, the loading indicator will not even be shown to the user. -->
                 <!-- Summary, if it ever gets shown to the user, then it will be shown for a minimum of 3 seconds, but it will
                       only be shown if the loading process takes more than 1 second. -->
-   @loading (after 1s; minimum 3s) {
+   @loading {
 
     <h2>This is a loading indicator...</h2>
+   }
+
+   <!-- @error shows whatever you put inside it when the observable fails (emits an error).
+        The *defer directive listens to the observable you provide and displays the corresponding block (@loading, @error, @complete) 
+        based on the observable’s state. -->
+   @error {
+
+    <h2>Something went wrong.</h2>
    }
 
 
