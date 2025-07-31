@@ -22,6 +22,25 @@
           the bundle is prefetched at all.
         - Second: Is to define when the section that was preloaded in the background, when will it be applied to the page 
           and displayed to the user. -->
+
+  <!-- Triggers: we can pass parameters or not which are triggers to execute defear under certain conditions  -->
+   <!-- - on idle (default behaviour): it loads the content when the browser is not busy (requestIdleCallback), useful for
+          non-urgent contnet. Also @defer{} or @defer(){} i.e., without parameters, those are equivalent to @defer(on idle) -->
+   <!-- - prefetch on idle: it DOES NOT renderizes immediately, just downloads the bundle in the background (when browser is free),
+          the content is shown after, when another trigger gets triggered (when, on viewport, etc) -->
+   <!-- - on immediate: it loads and renderizes immediately after both the "AppComponent" and the initial DOM are processed. The 
+          deffered content is downloaded and displayed as soon as angular can, but outside the initial blocking flow -->
+
+   <!-- - when: it loads the content when the boolean condition is true, useful for displaying content based on status (flags) -->
+   <!-- - on viewport: it loads the content when the element enters the viewport (visible screen), useful for content that should'n
+          be loaded until the user sees it. -->
+   <!-- - on interaction: it loads the content when the user interacts (click, focus, hover) with the placeholder, useful for 
+          interactive content, menus, or forms. -->
+   <!-- - after Xs: it loads the content after a determined time in seconds, useful to defer without depending on interaction. -->
+   <!-- - combining triggers - (on viewport; after 2s): example: it loads when both conditions are true, i.e., when the user
+          sees the component and 2 seconds have already passed. -->
+   
+
   @defer () { 
     <div class="courses">
       
