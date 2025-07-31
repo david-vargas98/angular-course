@@ -19,8 +19,7 @@ import { NgFor } from '@angular/common';
     standalone: true, // chnaged to true
     imports: [
       CourseCardComponent, // we need to make the import from each component
-      CourseImageComponent,
-      NgFor // instead of CommonModule which contains all class directives, we just import ngFor which is what we only need
+      CourseImageComponent
     ]
 })
 export class AppComponent implements OnInit, DoCheck {

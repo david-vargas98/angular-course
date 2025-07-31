@@ -14,26 +14,42 @@
     
   </div>
 
-  <div class="courses">
+  <!-- @Differ will allow us to control exactly when and if a given section of the page is loaded from the server and even
+        displayed to the user, it supports a wide variety of advanced use cases.
+        @Defer allows us to separate parts of our template into a separte Js bundle that gets loaded separately. 
+        We have 2 levels of control: 
+        - First: We can control WHEN the bundle is prefetched in the backgorund and we can also control if 
+          the bundle is prefetched at all.
+        - Second: Is to define when the section that was preloaded in the background, when will it be applied to the page 
+          and displayed to the user. -->
+  @defer () { 
+    <div class="courses">
+      
+      @for (course of courses; track $index) {
+        
+        <course-card
+          [course]="course"
+          (courseChanged)="save($event)"
+          type="beginner"> <!--Another input property-->
     
-    <!-- i18n is a custom attribute that tools such as the angular CLI are going to use to extract the string -->
-     <!-- The command which needs to be run was: "ng xi18n", and now for angular 14+ is: "ng extract-i18n" -->
-      <!-- Changing the message to display (content) and the meaning will change the "trans-unit id" of the translation -->
-    <!-- i18n attribute is used to give a description of the message and we use pipeline to give context -->
-     <!-- It has the following form: i18n="meaning|description" -->
-      <!-- If we want to add manually a unique identifier we can do so by adding 2 @s and the identifier name: @@identifier-->
-    <h4 i18n="welcome message|Greet the user a greeting at the beginning of the course@@WelcomeMessage">Welcome to the angular core deep dive course</h4>
+          <course-image [src]="course.iconUrl"></course-image>
+    
+        </course-card>
+  
+      }
+  
+    </div>
+    
+  }
+  <!-- Placeholder is used to show the user a messsage or something before showing up the actual content within @defer() -->
+   <!-- we use "minimum 3s" to give it 3 seconds to the placeholder to appear before showing the actual content -->
+    <!-- IS NOT A loading indicator, it could be some simplified content, some simplified version of the functionality that we
+          are defer loading. It would'n have heavy dependencies or logic, it could be a button or a demo of actual functionality  -->
+            <!-- Summary, @defear is kinda lazy loading, otherwise, @placeholder is kinda eager loading -->
+  @placeholder (minimum 3s) {
 
-    <course-card *ngFor="let course of courses"
-                 [course]="course"
-                 (courseChanged)="save($event)"
-                 type="beginner"> <!--Another input property-->
-
-      <course-image [src]="course.iconUrl"></course-image>
-
-    </course-card>
-
-  </div>
+    <h2>This is the placeholder content!</h2>
+  }
 
 
 </div>
