@@ -7,12 +7,11 @@
 
 <div>
 
-  <div class="demo">
-    <button (click)="onEditCourse()" i18n>Edit Course</button>
-    
-    <div i18n>{coursesTotal, plural, =0 {No courses available.} =1 {One course is available.} other {A total of {{coursesTotal}} courses are available.}}</div>
-    
-  </div>
+  <div style="border: 5px solid red; min-height: 900px; margin: 10px;"></div>
+
+</div>
+
+<div>
 
   <!-- @Differ will allow us to control exactly when and if a given section of the page is loaded from the server and even
         displayed to the user, it supports a wide variety of advanced use cases.
@@ -42,7 +41,8 @@
    
   <!-- (on timer(15s); prefetch on idle): Preload in the backgrond when the web browser is idle (lazy/free), and render at 15s  -->
    <!-- on timer(15s); prefetch on timer(10s): Preload the JS after 10s and render the content after 15s from when the page loads -->
-  @defer (on timer(15s); prefetch on timer(10s)) { 
+    <!-- (on viewport; prefetch on idle): Download teh content but also it waits for the scroll to show it (on viewport) -->
+  @defer (on viewport; prefetch on idle) { 
     <div class="courses">
       
       @for (course of courses; track $index) {
