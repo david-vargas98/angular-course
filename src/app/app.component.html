@@ -9,6 +9,8 @@
 
   <div style="border: 5px solid red; min-height: 900px; margin: 10px;"></div>
 
+  <h1 #title>Trigger viewport</h1>
+
 </div>
 
 <div>
@@ -42,7 +44,7 @@
   <!-- (on timer(15s); prefetch on idle): Preload in the backgrond when the web browser is idle (lazy/free), and render at 15s  -->
    <!-- on timer(15s); prefetch on timer(10s): Preload the JS after 10s and render the content after 15s from when the page loads -->
     <!-- (on viewport; prefetch on idle): Download teh content but also it waits for the scroll to show it (on viewport) -->
-  @defer (on viewport; prefetch on idle) { 
+  @defer (on viewport(title); prefetch on idle) { 
     <div class="courses">
       
       @for (course of courses; track $index) {
