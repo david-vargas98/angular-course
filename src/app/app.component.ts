@@ -30,6 +30,10 @@ export class AppComponent implements OnInit, DoCheck {
 
   coursesTotal = this.courses.length;  // total number of courses available in the course array.
 
+  performPrefetch: boolean = false;
+
+  display: boolean = false;
+
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
   constructor(private coursesService: CoursesService, 
               @Inject(CONFIG_TOKEN) private config: AppConfig, 
@@ -83,6 +87,14 @@ export class AppComponent implements OnInit, DoCheck {
     .subscribe(
       () => console.log("Course saved!")
     );
+  }
+
+  onPrefetch(){
+    this.performPrefetch = true;
+  }
+
+  onDisplay(){
+    this.display = true;
   }
 
 }

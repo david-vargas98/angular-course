@@ -5,9 +5,11 @@
 
 </div>
 
-<div #triggerPrefetch style="border: 5px solid red; min-height: 200px; margin: 10px; padding: 10px;">
+<div style="border: 5px solid red; min-height: 200px; margin: 10px; padding: 10px;">
 
-  <button #display>Trigger Display</button>
+  <button (click)="onPrefetch()">Trigger Prefetch</button>
+
+  <button (click)="onDisplay()">Trigger Display</button>
 
 </div>
 
@@ -49,7 +51,10 @@
              interacts with the input "#prefetch". And angular render the content when the user interacts with the "#display"
              button. Note: prefetch on interaction(prefetch) improves the experience, since it's previously downloaded, but 
              it's shown only when you decide. -->
-  @defer (on interaction(display); prefetch on hover(triggerPrefetch)) { 
+             <!-- on: is used for PRE-BUILT triggers, and when is used for CUSTOM triggers -->
+              <!-- (when display; prefetch when performPrefetch): the prefetch wil be executed when performPrefetch is true,
+                    then, the prefetch is going to be triggered, also the bundle will be displayed when display is true -->
+  @defer (when display; prefetch when performPrefetch) {
     <div class="courses">
       
       @for (course of courses; track $index) {
