@@ -5,12 +5,11 @@
 
 </div>
 
-<div>
+<div class="demo-triggers">
 
-  <div style="border: 5px solid red; min-height: 900px; margin: 10px;"></div>
+  <input placeholder="Type to trigger prefetch" #prefetch> <!-- #prefetch: template variable. -->
 
-  <h1 #title>Trigger viewport</h1>
-
+  <button #display>Trigger Display</button>
 </div>
 
 <div>
@@ -46,7 +45,12 @@
     <!-- (on viewport; prefetch on idle): Download teh content but also it waits for the scroll to show it (on viewport) -->
      <!-- on viewport(title); prefetch on idle: Download the content but also it waits for the scroll on "title" to show it -->
       <!-- (on interaction; prefetch on idle): defer content will be displayed only when an event on placeholder is triggered -->
-  @defer (on interaction; prefetch on idle) { 
+       <!-- (on interaction; prefetch on interaction): this does both, the prefetching and the display of the deferred block -->
+        <!-- (on interaction(display); prefetch on interaction(prefetch)): angula downloads the JS bundle when the user
+             interacts with the input "#prefetch". And angular render the content when the user interacts with the "#display"
+             button. Note: prefetch on interaction(prefetch) improves the experience, since it's previously downloaded, but 
+             it's shown only when you decide. -->
+  @defer (on interaction(display); prefetch on interaction(prefetch)) { 
     <div class="courses">
       
       @for (course of courses; track $index) {
