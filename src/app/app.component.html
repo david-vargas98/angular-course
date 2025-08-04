@@ -44,7 +44,9 @@
   <!-- (on timer(15s); prefetch on idle): Preload in the backgrond when the web browser is idle (lazy/free), and render at 15s  -->
    <!-- on timer(15s); prefetch on timer(10s): Preload the JS after 10s and render the content after 15s from when the page loads -->
     <!-- (on viewport; prefetch on idle): Download teh content but also it waits for the scroll to show it (on viewport) -->
-  @defer (on viewport(title); prefetch on idle) { 
+     <!-- on viewport(title); prefetch on idle: Download the content but also it waits for the scroll on "title" to show it -->
+      <!-- (on interaction; prefetch on idle): defer content will be displayed only when an event on placeholder is triggered -->
+  @defer (on interaction; prefetch on idle) { 
     <div class="courses">
       
       @for (course of courses; track $index) {
