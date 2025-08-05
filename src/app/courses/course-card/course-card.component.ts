@@ -10,6 +10,7 @@ import {
     computed,
     ContentChildren,
     DoCheck,
+    effect,
     ElementRef,
     EventEmitter,
     Inject,
@@ -39,7 +40,7 @@ import { CourseTitleComponent } from 'src/app/course-title/course-title.componen
     imports: [/*CommonModule*/ NgIf, CourseTitleComponent] // CommonModule includes ngIf, ngSwith for standalone components, but in this instance the
                             // ngIf used to show the cards in course-card.component.html
 })
-export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked, AfterViewChecked, 
+export class CourseCardComponent implements OnInit, OnDestroy, AfterContentChecked, AfterViewChecked, 
     AfterContentInit, AfterViewInit, DoCheck {
 
     course = input<Course>();
@@ -54,15 +55,11 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
     // we DON'T initialize anythin in here
     constructor(private coursesService: CoursesService, 
         @Attribute('type') private type: string) {
-            console.log("constructor", this.course()) // component inputs such as "course" are not initiliazed yet
-    }
+            effect(() => { // dependency between "course" variable and "effect" signal
 
-    // this lifecycle hook is called by angular whenever something occurs in the component lifecycle
-    // this method is not meant for us to call it directly, also takes an argument, the "changes argument"
+                console.log("New course value:", this.course())
 
-    // ----- Is called every time that there is a change detection run in our application ----- //
-    ngOnChanges(changes) {
-        console.log("ngOnChanges", changes)
+            });
     }
 
     // if the component has any initialization logic, this is the correct place to put that logic
