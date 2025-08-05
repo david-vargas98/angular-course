@@ -5,104 +5,13 @@
 
 </div>
 
-<div style="border: 5px solid red; min-height: 200px; margin: 10px; padding: 10px;">
-
-  <button (click)="onPrefetch()">Trigger Prefetch</button>
-
-  <button (click)="onDisplay()">Trigger Display</button>
-
-</div>
-
 <div>
 
-  <!-- @Differ will allow us to control exactly when and if a given section of the page is loaded from the server and even
-        displayed to the user, it supports a wide variety of advanced use cases.
-        @Defer allows us to separate parts of our template into a separte Js bundle that gets loaded separately. 
-        We have 2 levels of control: 
-        - First: We can control WHEN the bundle is prefetched in the backgorund and we can also control if 
-          the bundle is prefetched at all.
-        - Second: Is to define when the section that was preloaded in the background, when will it be applied to the page 
-          and displayed to the user. -->
+  <div>
+    <div>Counter value: {{ counter }}</div>
 
-  <!-- Triggers: we can pass parameters or not which are triggers to execute defear under certain conditions  -->
-   <!-- - on idle (default behaviour): it loads the content when the browser is not busy (requestIdleCallback), useful for
-          non-urgent contnet. Also @defer{} or @defer(){} i.e., without parameters, those are equivalent to @defer(on idle) -->
-   <!-- - prefetch on idle: it DOES NOT render immediately, just downloads the bundle in the background (when browser is free),
-          the content is shown after, when another trigger gets triggered (when, on viewport, etc) -->
-   <!-- - on immediate: it loads and render immediately after both the "AppComponent" and the initial DOM are processed. The 
-          deffered content is downloaded and displayed as soon as angular can, but outside the initial blocking flow -->
-
-   <!-- - when: it loads the content when the boolean condition is true, useful for displaying content based on status (flags) -->
-   <!-- - on viewport: it loads the content when the element enters the viewport (visible screen), useful for content that should'n
-          be loaded until the user sees it. -->
-   <!-- - on interaction: it loads the content when the user interacts (click, focus, hover) with the placeholder, useful for 
-          interactive content, menus, or forms. -->
-   <!-- - after Xs: it loads the content after a determined time in seconds, useful to defer without depending on interaction. -->
-   <!-- - combining triggers - (on viewport; after 2s): example: it loads when both conditions are true, i.e., when the user
-          sees the component and 2 seconds have already passed. -->
-   
-  <!-- (on timer(15s); prefetch on idle): Preload in the backgrond when the web browser is idle (lazy/free), and render at 15s  -->
-   <!-- on timer(15s); prefetch on timer(10s): Preload the JS after 10s and render the content after 15s from when the page loads -->
-    <!-- (on viewport; prefetch on idle): Download teh content but also it waits for the scroll to show it (on viewport) -->
-     <!-- on viewport(title); prefetch on idle: Download the content but also it waits for the scroll on "title" to show it -->
-      <!-- (on interaction; prefetch on idle): defer content will be displayed only when an event on placeholder is triggered -->
-       <!-- (on interaction; prefetch on interaction): this does both, the prefetching and the display of the deferred block -->
-        <!-- (on interaction(display); prefetch on interaction(prefetch)): angula downloads the JS bundle when the user
-             interacts with the input "#prefetch". And angular render the content when the user interacts with the "#display"
-             button. Note: prefetch on interaction(prefetch) improves the experience, since it's previously downloaded, but 
-             it's shown only when you decide. -->
-             <!-- on: is used for PRE-BUILT triggers, and when is used for CUSTOM triggers -->
-              <!-- (when display; prefetch when performPrefetch): the prefetch wil be executed when performPrefetch is true,
-                    then, the prefetch is going to be triggered, also the bundle will be displayed when display is true -->
-  @defer (when display; prefetch when performPrefetch) {
-    <div class="courses">
-      
-      @for (course of courses; track $index) {
-        
-        <course-card
-          [course]="course"
-          (courseChanged)="save($event)"
-          type="beginner"> <!--Another input property-->
-    
-          <course-image [src]="course.iconUrl"></course-image>
-    
-        </course-card>
-  
-      }
-  
-    </div>
-    
-  }
-  <!-- Placeholder is used to show the user a messsage or something before showing up the actual content within @defer() -->
-   <!-- we use "minimum 3s" to give it 3 seconds to the placeholder to appear before showing the actual content -->
-    <!-- IS NOT A loading indicator, it could be some simplified content, some simplified version of the functionality that we
-          are defer loading. It would'n have heavy dependencies or logic, it could be a button or a demo of actual functionality  -->
-            <!-- Summary, @defear is kinda lazy loading, otherwise, @placeholder is kinda eager loading -->
-  @placeholder {
-
-    <h2>This is the placeholder content!</h2>
-  }
-  <!-- Instead of using placeholder to simulate a loading indicator, we use the @loading block  -->
-   <!-- "(minimum 3s; after 1s)" means if the loading process in the background takes more than one second then, and only then
-          show the loading indicator, and if you show it, it should be for a minimum of three seconds, buuuut if the loading
-           process takes more than one second, then the loading indicator never gets shown at all -->
-           <!-- The above said, ensures that if the loading of the deferred block happens very fast, then, thanks to the after
-                1s condition, the loading indicator will not even be shown to the user. -->
-                <!-- Summary, if it ever gets shown to the user, then it will be shown for a minimum of 3 seconds, but it will
-                      only be shown if the loading process takes more than 1 second. -->
-   @loading {
-
-    <h2>This is a loading indicator...</h2>
-   }
-
-   <!-- @error shows whatever you put inside it when the observable fails (emits an error).
-        The *defer directive listens to the observable you provide and displays the corresponding block (@loading, @error, @complete) 
-        based on the observable’s state. -->
-   @error {
-
-    <h2>Something went wrong.</h2>
-   }
-
+    <button (click)="increment()">Increment</button>
+  </div>
 
 </div>
 
