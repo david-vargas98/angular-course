@@ -28,6 +28,16 @@ export class AppComponent {
   // so we turn "counter" into a signal using the angular signal API
   counter = signal(0); // this is a WritableSignal<number> (it can be changed)
 
+  course = signal({
+    id: 1,
+    title: "Angular For Beginners"
+  })
+
+  courses = signal([
+    "Angular For Beginners",
+    "Reactive Angular Course"
+  ])
+
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
   constructor() {
 
@@ -48,7 +58,23 @@ export class AppComponent {
     // 2. the update API takes a function whose first argument is the current value of the signal
     this.counter.update(val => val + 1);
 
-    
+    // THIS IS WRONG, sice we're mutating their values directly, this bypasses the whole signal mechanism
+    // when we mutate a property in a signal directly, there's no way for angular to know that the value has been mutated. AVOID IT!
+    // Instead, you need to use either update() or set() methods
+    // this.course().title = "Hellow world";
+
+    // this.courses().push("Angular Core Deep Dive");
+
+    // By doing this way, the course signal is going to be able to inform any interest consumers that the new value is available
+    // that's the whole point of signals
+
+    // THE RIGHT WAY!!!
+    this.course.set({
+      id: 1,
+      title: "Hellow world"
+    });
+
+    this.courses.update(courses => [...courses, "Angular Core Deep Dive"])
   }
 
 }

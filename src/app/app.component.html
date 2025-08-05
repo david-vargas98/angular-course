@@ -11,6 +11,10 @@
     <!-- We need to call the signal variable by calling it like if it was a function -->
     <div>Counter value: {{ counter() }}</div>
 
+    <div>Course Title: {{ course().title }}</div>
+
+    <div>Courses: {{courses().join(', ')}}</div>
+
     <button (click)="increment()">Increment</button>
   </div>
 
