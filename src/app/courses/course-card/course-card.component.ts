@@ -43,7 +43,8 @@ import { CourseTitleComponent } from 'src/app/course-title/course-title.componen
 export class CourseCardComponent implements OnInit, OnDestroy, AfterContentChecked, AfterViewChecked, 
     AfterContentInit, AfterViewInit, DoCheck {
 
-    course = input<Course>();
+    // we can make the input required:
+    course = input.required<Course>({});
 
     @Input()
     cardIndex: number;
