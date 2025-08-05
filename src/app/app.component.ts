@@ -1,4 +1,4 @@
-import {signal, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren, computed} from '@angular/core';
+import {signal, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren, computed, effect} from '@angular/core';
 import {COURSES} from '../db-data';
 import {Course} from './model/course';
 import {CourseCardComponent} from './courses/course-card/course-card.component';
@@ -32,19 +32,13 @@ export class AppComponent {
   
   // computed() API allows you to define a signal that is derived from one or more source signals
   derivedCounter = computed(() => { // read only signal (cannot be modified)
+    console.log("Computed");
     
     const counter = this.counter();  // source (value of counter)
     
-    if(this.multiplier >= 10)
-      return counter * 10; // returning value of the derived signal
-    else
-      return 0;
+    return counter * 10; // returning value of the derived signal
+
   });
-
-  incrementMultiplier(){
-
-    this.multiplier++;
-  }
 
   course = signal({
     id: 1,
@@ -60,6 +54,21 @@ export class AppComponent {
   constructor() {
 
     const readOnlySignal = this.counter.asReadonly(); // this is a Signal<number> (it can't be changed)
+    console.log("Constructor");
+    // effect() is used to automatically execute a function whenever one or more signals on which it depends change
+    effect(() => {
+
+      // DO NOT MODIFY THE SIGNALS IN HERE, is a MISTAKE!!!, is effect() is meant for pure side effect
+      //this.counter.update(val => val + 1); NOT ALLOWED!!! INFINITE LOOP
+      
+      const counterValue = this.counter(); // signal that angular will follow up i.e., -- DEPENDENCY between effect and counter() --
+                                          // i.e., when counter() changes, effect() gets called
+      const derivedCounterValue = this.derivedCounter();
+
+      console.log(` counter: ${counterValue} | derived counter ${derivedCounterValue}`);
+
+
+    });
 
   }
 
@@ -74,6 +83,7 @@ export class AppComponent {
     //this.counter.set(this.counter() + 1)
 
     // 2. the update API takes a function whose first argument is the current value of the signal
+    console.log("Incremento");
     this.counter.update(val => val + 1);
 
     // THIS IS WRONG, sice we're mutating their values directly, this bypasses the whole signal mechanism
