@@ -7,11 +7,13 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    computed,
     ContentChildren,
     DoCheck,
     ElementRef,
     EventEmitter,
     Inject,
+    input,
     Input,
     OnChanges,
     OnDestroy,
@@ -27,20 +29,20 @@ import {Course} from '../../model/course';
 import {CourseImageComponent} from '../course-image/course-image.component';
 import { CoursesService } from '../courses.service';
 import { CommonModule, NgIf } from '@angular/common';
+import { CourseTitleComponent } from 'src/app/course-title/course-title.component';
 
 @Component({
     selector: 'course-card',
     templateUrl: './course-card.component.html',
     styleUrls: ['./course-card.component.css'],
     standalone: true,
-    imports: [/*CommonModule*/ NgIf] // CommonModule includes ngIf, ngSwith for standalone components, but in this instance the
+    imports: [/*CommonModule*/ NgIf, CourseTitleComponent] // CommonModule includes ngIf, ngSwith for standalone components, but in this instance the
                             // ngIf used to show the cards in course-card.component.html
 })
 export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterContentChecked, AfterViewChecked, 
     AfterContentInit, AfterViewInit, DoCheck {
 
-    @Input()
-    course: Course;
+    course = input<Course>();
 
     @Input()
     cardIndex: number;
@@ -52,7 +54,7 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
     // we DON'T initialize anythin in here
     constructor(private coursesService: CoursesService, 
         @Attribute('type') private type: string) {
-            console.log("constructor", this.course) // component inputs such as "course" are not initiliazed yet
+            console.log("constructor", this.course()) // component inputs such as "course" are not initiliazed yet
     }
 
     // this lifecycle hook is called by angular whenever something occurs in the component lifecycle
@@ -66,7 +68,14 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
     // if the component has any initialization logic, this is the correct place to put that logic
     // also this is the right place to implement initialization logic, instead of putting it inside the constructor
     ngOnInit() {
-        console.log("ngOnInit", this.course) // otherwise, the "course" omponent input (variable) is now initialized
+        console.log("ngOnInit", this.course()) // otherwise, the "course" omponent input (variable) is now initialized
+
+        const description = computed(() => {
+            console.log("Computed log.")
+            const course = this.course();
+
+            return course.description + `( ${course.category} )`;
+        });
     }
     
     // best place to implement any custom change detection logic that we might need: this should occur only in rare occasions but 
@@ -142,12 +151,12 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges, AfterC
 
     onTitleChanged(newTitle: string){
         
-        this.course.description = newTitle;
+        this.course().description = newTitle;
     }
 
     onSaveClicked(description:string) {
 
-        this.courseEmitter.emit({...this.course, description});
+        this.courseEmitter.emit({...this.course(), description});
 
     }
 
