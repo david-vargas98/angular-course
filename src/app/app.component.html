@@ -9,21 +9,24 @@
 
   <div>
     <!-- We need to call the signal variable by calling it like if it was a function -->
-    <div>Counter value: {{ counter() }}</div>
+    <div>Counter value: {{ counterService.counter() }}</div>
 
     <div>Derived value: {{ derivedCounter() }}</div>
 
-    <div>Multiplier: {{ multiplier }}</div>
-
-    <div>Course Title: {{ course().title }}</div>
-
-    <div>Courses: {{courses().join(', ')}}</div>
-
     <button (click)="increment()">Increment</button>
 
-    <button (click)="onCleanup()">Cleanup</button>
-
   </div>
+
+  <label>
+    Battery
+    <meter 
+    value="85"
+    min="0"
+    max="100"
+    low="30"
+    high="80"
+    optimum="100"></meter>
+  </label>
 
 </div>
 
