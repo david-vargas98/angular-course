@@ -1,4 +1,4 @@
-import {signal, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {signal, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren, computed} from '@angular/core';
 import {COURSES} from '../db-data';
 import {Course} from './model/course';
 import {CourseCardComponent} from './courses/course-card/course-card.component';
@@ -27,6 +27,15 @@ export class AppComponent {
 
   // so we turn "counter" into a signal using the angular signal API
   counter = signal(0); // this is a WritableSignal<number> (it can be changed)
+
+  // computed() API allows you to define a signal that is derived from one or more source signals
+  derivedCounter = computed(() => { // read only signal (cannot be modified)
+
+    const counter = this.counter();  // source (value of counter)
+
+    return counter * 10; // returning value of the derived signal
+
+  });
 
   course = signal({
     id: 1,
