@@ -26,10 +26,13 @@ export class AppComponent {
   // your data is inside a signal
 
   // so we turn "counter" into a signal using the angular signal API
-  counter = signal(0);
+  counter = signal(0); // this is a WritableSignal<number> (it can be changed)
 
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
-  constructor() { 
+  constructor() {
+
+    const readOnlySignal = this.counter.asReadonly(); // this is a Signal<number> (it can't be changed)
+
   }
 
   increment(){
@@ -38,7 +41,12 @@ export class AppComponent {
     // now angular won't compare the values of the expressions of the whole component tree before and after an event (click)
 
     // several alternatives for modifying the signal value
-    this.counter.set(this.counter() + 1)
+    
+    // 1. the set API takes a parameter as value, in this case the same value + 1 
+    //this.counter.set(this.counter() + 1)
+
+    // 2. the update API takes a function whose first argument is the current value of the signal
+    this.counter.update(val => val + 1);
 
     
   }
