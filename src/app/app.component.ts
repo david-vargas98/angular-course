@@ -28,14 +28,23 @@ export class AppComponent {
   // so we turn "counter" into a signal using the angular signal API
   counter = signal(0); // this is a WritableSignal<number> (it can be changed)
 
+  multiplier: number = 0;
+  
   // computed() API allows you to define a signal that is derived from one or more source signals
   derivedCounter = computed(() => { // read only signal (cannot be modified)
-
+    
     const counter = this.counter();  // source (value of counter)
-
-    return counter * 10; // returning value of the derived signal
-
+    
+    if(this.multiplier >= 10)
+      return counter * 10; // returning value of the derived signal
+    else
+      return 0;
   });
+
+  incrementMultiplier(){
+
+    this.multiplier++;
+  }
 
   course = signal({
     id: 1,
