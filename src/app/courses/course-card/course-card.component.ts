@@ -43,11 +43,10 @@ import { CourseTitleComponent } from 'src/app/course-title/course-title.componen
 export class CourseCardComponent implements OnInit, OnDestroy, AfterContentChecked, AfterViewChecked, 
     AfterContentInit, AfterViewInit, DoCheck {
 
-    // we can make the input required:
-    course = input.required<Course>({});
-
-    @Input()
-    cardIndex: number;
+    course = input<Course>(null, {
+        alias: "tutorial" // this alias property allows us to define an alternative name for the input
+        //transform: // we can also use transform
+    });
 
     @Output('courseChanged')
     courseEmitter = new EventEmitter<Course>();

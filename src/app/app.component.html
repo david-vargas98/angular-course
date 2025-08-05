@@ -11,7 +11,7 @@
 
     @for (course of courses; track course.id) {
 
-      <course-card [course]="course"> <!-- course is required, we're going to get an error if is not provided -->
+      <course-card [tutorial]="course"> <!-- We change course variable name for its alias "tutorial" -->
 
         <course-image [src]="course.iconUrl"></course-image>
 
