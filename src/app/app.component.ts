@@ -1,4 +1,4 @@
-import {signal, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren, computed, effect} from '@angular/core';
+import {signal, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren, computed, effect, EffectRef} from '@angular/core';
 import {COURSES} from '../db-data';
 import {Course} from './model/course';
 import {CourseCardComponent} from './courses/course-card/course-card.component';
@@ -29,6 +29,8 @@ export class AppComponent {
   counter = signal(0); // this is a WritableSignal<number> (it can be changed)
 
   multiplier: number = 0;
+
+  effectRef: EffectRef; // side effect reference to send to onCleanup()
   
   // computed() API allows you to define a signal that is derived from one or more source signals
   derivedCounter = computed(() => { // read only signal (cannot be modified)
@@ -56,10 +58,14 @@ export class AppComponent {
     const readOnlySignal = this.counter.asReadonly(); // this is a Signal<number> (it can't be changed)
     console.log("Constructor");
     // effect() is used to automatically execute a function whenever one or more signals on which it depends change
-    effect(() => {
+    this.effectRef = effect((onCleanup) => { // onCleanup is a callback that allows us to perform an action when the cleanup occurs
 
       // DO NOT MODIFY THE SIGNALS IN HERE, is a MISTAKE!!!, is effect() is meant for pure side effect
       //this.counter.update(val => val + 1); NOT ALLOWED!!! INFINITE LOOP
+
+      onCleanup(() => {
+        console.log("Cleanup ocurred!"); // cleans up the side effect()
+      })
       
       const counterValue = this.counter(); // signal that angular will follow up i.e., -- DEPENDENCY between effect and counter() --
                                           // i.e., when counter() changes, effect() gets called
@@ -67,9 +73,17 @@ export class AppComponent {
 
       console.log(` counter: ${counterValue} | derived counter ${derivedCounterValue}`);
 
-
+    },{
+      // if you wan to make some manual cleanup (since there exists an automatic cleanup mechanism), maybe you want to release an 
+      // application, cancel a timer interval, cancel a timeout, or close a network connection, etc. Is rarely needed, but if, for 
+      // example, you'd want to manually clean effect(), and not rely on the automated mechanism, then you can do so by activating:
+      manualCleanup: true
     });
+  }
 
+  // this handles the cleanup of effectRef
+  onCleanup(){
+    this.effectRef.destroy(); // this cleans up the side effect
   }
 
   increment(){
