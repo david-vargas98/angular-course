@@ -8,7 +8,8 @@
 <div>
 
   <div>
-    <div>Counter value: {{ counter }}</div>
+    <!-- We need to call the signal variable by calling it like if it was a function -->
+    <div>Counter value: {{ counter() }}</div>
 
     <button (click)="increment()">Increment</button>
   </div>

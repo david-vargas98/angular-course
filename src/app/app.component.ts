@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {signal, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, Inject, InjectionToken, Injector, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {COURSES} from '../db-data';
 import {Course} from './model/course';
 import {CourseCardComponent} from './courses/course-card/course-card.component';
@@ -22,15 +22,25 @@ import { NgFor } from '@angular/common';
     ]
 })
 export class AppComponent {
+  // if you want angular to be notified that your data is being changed via signals, then you need to make sure that all 
+  // your data is inside a signal
 
-  counter: number = 0;
+  // so we turn "counter" into a signal using the angular signal API
+  counter = signal(0);
 
   // we need to specify the "CONFIG_TOKEN" token, since the interface doesn't exist at runtime, it's a compile time construct
   constructor() { 
   }
 
   increment(){
-    this.counter++;
+    // what's the advantage of putting all your data inside a signal? The signal makes it extremely easy for angular to detect
+    // that your data has changed and update it in a efficient way instead of using the default change detection, since 
+    // now angular won't compare the values of the expressions of the whole component tree before and after an event (click)
+
+    // several alternatives for modifying the signal value
+    this.counter.set(this.counter() + 1)
+
+    
   }
 
 }
