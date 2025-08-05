@@ -7,26 +7,18 @@
 
 <div>
 
-  <div>
-    <!-- We need to call the signal variable by calling it like if it was a function -->
-    <div>Counter value: {{ counterService.counter() }}</div>
+  <div class="courses">
 
-    <div>Derived value: {{ derivedCounter() }}</div>
+    @for (course of courses; track course.id) {
 
-    <button (click)="increment()">Increment</button>
+      <course-card [course]="course">
+
+        <course-image [src]="course.iconUrl"></course-image>
+
+      </course-card>
+    }
 
   </div>
-
-  <label>
-    Battery
-    <meter 
-    value="85"
-    min="0"
-    max="100"
-    low="30"
-    high="80"
-    optimum="100"></meter>
-  </label>
 
 </div>
 
